@@ -245,3 +245,28 @@ export async function deleteUser(id) {
     method: 'DELETE',
   });
 }
+
+/**
+ * List releases (admin)
+ */
+export async function listReleases(params = {}) {
+  const query = new URLSearchParams(params).toString();
+  return apiRequest(`/admin/releases${query ? `?${query}` : ''}`);
+}
+
+/**
+ * Get release by ID (admin)
+ */
+export async function getRelease(id) {
+  return apiRequest(`/admin/releases/${id}`);
+}
+
+/**
+ * Update release - yank/unyank (admin)
+ */
+export async function updateRelease(id, data) {
+  return apiRequest(`/admin/releases/${id}`, {
+    method: 'PATCH',
+    body: JSON.stringify(data),
+  });
+}

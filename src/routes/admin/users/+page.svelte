@@ -89,6 +89,7 @@
       <nav class="flex items-center gap-4">
         <a href="/admin" class="nav-link">Dashboard</a>
         <a href="/admin/users" class="nav-link active">Users</a>
+        <a href="/admin/releases" class="nav-link">Releases</a>
         <a href="/dashboard" class="btn btn-secondary">Back to App</a>
         <button class="btn btn-secondary" on:click={handleLogout}>Sign Out</button>
       </nav>
