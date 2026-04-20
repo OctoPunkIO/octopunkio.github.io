@@ -1,33 +1,17 @@
 <script>
   import { onMount } from 'svelte';
   import { isAuthenticated, getGitHubAuthURL } from '$lib/api.js';
+  import { detectOS, ALL_PLATFORMS, fetchLatestDownloads, getDownloadForPlatform } from '$lib/downloads.js';
 
   let isLoggedIn = false;
   let loading = true;
-  let detectedOS = null;
-  let downloadUrl = '#';
+  let detected = null;
+  let release = null;
   let dropdownOpen = false;
   let dropdownButton;
 
-  const DOWNLOAD_URLS = {
-    macOS: '/downloads/Octopunk-macos.dmg',
-    Windows: '/downloads/Octopunk-windows.exe',
-    Linux: '/downloads/Octopunk-linux.AppImage'
-  };
-
-  function detectOS() {
-    const userAgent = navigator.userAgent.toLowerCase();
-    const platform = navigator.platform?.toLowerCase() || '';
-
-    if (platform.includes('mac') || userAgent.includes('mac')) {
-      return 'macOS';
-    } else if (platform.includes('win') || userAgent.includes('win')) {
-      return 'Windows';
-    } else if (platform.includes('linux') || userAgent.includes('linux')) {
-      return 'Linux';
-    }
-    return null; // Could not detect
-  }
+  $: primaryDownload = detected && release ? getDownloadForPlatform(release, detected.platform) : null;
+  $: altPlatforms = ALL_PLATFORMS.filter(p => p.platform !== detected?.platform);
 
   function toggleDropdown() {
     dropdownOpen = !dropdownOpen;
@@ -46,10 +30,8 @@
   onMount(async () => {
     isLoggedIn = await isAuthenticated();
     loading = false;
-    detectedOS = detectOS();
-    if (detectedOS) {
-      downloadUrl = DOWNLOAD_URLS[detectedOS];
-    }
+    detected = detectOS();
+    release = await fetchLatestDownloads('stable');
 
     document.addEventListener('click', handleClickOutside);
     return () => {
@@ -59,6 +41,11 @@
 
   function handleSignIn() {
     window.location.href = getGitHubAuthURL();
+  }
+
+  function getArtifactUrl(platform) {
+    const artifact = getDownloadForPlatform(release, platform);
+    return artifact?.download_url || null;
   }
 </script>
 
@@ -99,25 +86,36 @@
 		</p>
 
         <div class="cta mt-8">
-          {#if detectedOS}
-            <a href={downloadUrl} class="btn btn-primary btn-large download-btn">
+          {#if !release}
+            <!-- No release available or API unreachable — show GitHub link as fallback -->
+            <a href="https://github.com/OctoPunkIO/OctoPunk/releases" class="btn btn-primary btn-large download-btn" target="_blank" rel="noopener">
               <svg viewBox="0 0 16 16" width="20" height="20" fill="currentColor">
                 <path d="M2.75 14A1.75 1.75 0 0 1 1 12.25v-2.5a.75.75 0 0 1 1.5 0v2.5c0 .138.112.25.25.25h10.5a.25.25 0 0 0 .25-.25v-2.5a.75.75 0 0 1 1.5 0v2.5A1.75 1.75 0 0 1 13.25 14Z"/>
                 <path d="M7.25 7.689V2a.75.75 0 0 1 1.5 0v5.689l1.97-1.969a.749.749 0 1 1 1.06 1.06l-3.25 3.25a.749.749 0 0 1-1.06 0L4.22 6.78a.749.749 0 1 1 1.06-1.06l1.97 1.969Z"/>
               </svg>
-              Download for {detectedOS}
+              Download Octopunk
+            </a>
+            <p class="download-alt text-secondary mt-4">View releases on GitHub</p>
+          {:else if detected && primaryDownload}
+            <!-- OS detected and artifact available -->
+            <a href={primaryDownload.download_url} class="btn btn-primary btn-large download-btn">
+              <svg viewBox="0 0 16 16" width="20" height="20" fill="currentColor">
+                <path d="M2.75 14A1.75 1.75 0 0 1 1 12.25v-2.5a.75.75 0 0 1 1.5 0v2.5c0 .138.112.25.25.25h10.5a.25.25 0 0 0 .25-.25v-2.5a.75.75 0 0 1 1.5 0v2.5A1.75 1.75 0 0 1 13.25 14Z"/>
+                <path d="M7.25 7.689V2a.75.75 0 0 1 1.5 0v5.689l1.97-1.969a.749.749 0 1 1 1.06 1.06l-3.25 3.25a.749.749 0 0 1-1.06 0L4.22 6.78a.749.749 0 1 1 1.06-1.06l1.97 1.969Z"/>
+              </svg>
+              Download for {detected.os}
             </a>
             <p class="download-alt text-secondary mt-4">
-              or download for
-              {#if detectedOS === 'macOS'}
-                <a href={DOWNLOAD_URLS.Windows}>Windows</a> · <a href={DOWNLOAD_URLS.Linux}>Linux</a>
-              {:else if detectedOS === 'Windows'}
-                <a href={DOWNLOAD_URLS.macOS}>macOS</a> · <a href={DOWNLOAD_URLS.Linux}>Linux</a>
-              {:else}
-                <a href={DOWNLOAD_URLS.macOS}>macOS</a> · <a href={DOWNLOAD_URLS.Windows}>Windows</a>
-              {/if}
+              {release.version} · or download for
+              {#each altPlatforms as alt}
+                {@const url = getArtifactUrl(alt.platform)}
+                {#if url}
+                  <a href={url}>{alt.label}</a>{' '}
+                {/if}
+              {/each}
             </p>
           {:else}
+            <!-- OS not detected or no artifact for this OS — show dropdown -->
             <div class="download-dropdown" bind:this={dropdownButton}>
               <button class="btn btn-primary btn-large download-btn" on:click={toggleDropdown}>
                 <svg viewBox="0 0 16 16" width="20" height="20" fill="currentColor">
@@ -131,21 +129,20 @@
               </button>
               {#if dropdownOpen}
                 <div class="dropdown-menu">
-                  <a href={DOWNLOAD_URLS.macOS} class="dropdown-item" on:click={closeDropdown}>
-                    macOS
-                    <span class="dropdown-item-ext">.dmg</span>
-                  </a>
-                  <a href={DOWNLOAD_URLS.Windows} class="dropdown-item" on:click={closeDropdown}>
-                    Windows
-                    <span class="dropdown-item-ext">.exe</span>
-                  </a>
-                  <a href={DOWNLOAD_URLS.Linux} class="dropdown-item" on:click={closeDropdown}>
-                    Linux
-                    <span class="dropdown-item-ext">.AppImage</span>
-                  </a>
+                  {#each ALL_PLATFORMS as plat}
+                    {@const url = getArtifactUrl(plat.platform)}
+                    {#if url}
+                      <a href={url} class="dropdown-item" on:click={closeDropdown}>
+                        {plat.label}
+                      </a>
+                    {/if}
+                  {/each}
                 </div>
               {/if}
             </div>
+            {#if release}
+              <p class="download-alt text-secondary mt-4">{release.version}</p>
+            {/if}
           {/if}
         </div>
       </section>

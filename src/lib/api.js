@@ -240,6 +240,30 @@ export async function updateUser(id, data) {
 /**
  * Delete user (admin)
  */
+/**
+ * Get latest release (public, no auth required)
+ * @param {string} stream - 'stable' or 'beta'
+ * @param {string} [platform] - e.g. 'darwin-arm64'
+ */
+export async function getLatestRelease(stream = 'stable', platform = '') {
+  const params = new URLSearchParams({ stream });
+  if (platform) params.set('platform', platform);
+  const response = await fetch(`${API_URL}/releases/latest?${params}`);
+  if (response.status === 404) return null;
+  if (!response.ok) return null;
+  return response.json();
+}
+
+/**
+ * List public releases
+ */
+export async function getPublicReleases(params = {}) {
+  const query = new URLSearchParams(params).toString();
+  const response = await fetch(`${API_URL}/releases${query ? `?${query}` : ''}`);
+  if (!response.ok) return { releases: [], pagination: { page: 1, per_page: 10, total: 0 } };
+  return response.json();
+}
+
 export async function deleteUser(id) {
   return apiRequest(`/admin/users/${id}`, {
     method: 'DELETE',

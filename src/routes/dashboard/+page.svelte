@@ -13,6 +13,7 @@
     getSubscriptionState,
     undoCancelSubscription
   } from '$lib/api.js';
+  import { detectOS, ALL_PLATFORMS, fetchLatestDownloads, getDownloadForPlatform } from '$lib/downloads.js';
   import { pollingManager } from '$lib/utils/pollingManager.js';
 
   let user = null;
@@ -35,6 +36,10 @@
   let cooldownInterval = null;
   let unsubscribePolling = null;
 
+  // Downloads
+  let detected = null;
+  let release = null;
+
   // Helper to check if an action is allowed
   function canDoAction(action) {
     if (!subscriptionState?.allowed_actions) return false;
@@ -42,6 +47,10 @@
   }
 
   onMount(async () => {
+    // Load download info (non-blocking)
+    detected = detectOS();
+    fetchLatestDownloads('stable').then(r => { release = r; });
+
     // Reset redirect states (handles browser back button from Stripe checkout)
     subscribing = false;
 
@@ -646,9 +655,24 @@
             Download the Octopunk desktop app to get started.
           </p>
           <div class="download-buttons mt-4">
-            <a href="#" class="btn btn-primary">Download for macOS</a>
-            <a href="#" class="btn btn-secondary">Download for Windows</a>
-            <a href="#" class="btn btn-secondary">Download for Linux</a>
+            {#if release}
+              {#if detected}
+                {@const primary = getDownloadForPlatform(release, detected.platform)}
+                {#if primary}
+                  <a href={primary.download_url} class="btn btn-primary">Download for {detected.os}</a>
+                {/if}
+              {/if}
+              {#each ALL_PLATFORMS as plat}
+                {#if plat.platform !== detected?.platform}
+                  {@const artifact = getDownloadForPlatform(release, plat.platform)}
+                  {#if artifact}
+                    <a href={artifact.download_url} class="btn btn-secondary">{plat.label}</a>
+                  {/if}
+                {/if}
+              {/each}
+            {:else}
+              <a href="https://github.com/OctoPunkIO/OctoPunk/releases" class="btn btn-primary" target="_blank" rel="noopener">View Downloads on GitHub</a>
+            {/if}
           </div>
         </div>
       {/if}

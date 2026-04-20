@@ -1,9 +1,10 @@
 <script>
   import { onMount } from 'svelte';
   import { getPricing } from '$lib/api.js';
+  import { detectOS, ALL_PLATFORMS, fetchLatestDownloads, getDownloadForPlatform } from '$lib/downloads.js';
 
-  let detectedOS = null;
-  let downloadUrl = '#';
+  let detected = null;
+  let release = null;
   let dropdownOpen = false;
   let dropdownButton;
 
@@ -13,12 +14,6 @@
   let pricingLoading = true;
   let billingInterval = 'monthly'; // 'monthly' or 'annual'
 
-  const DOWNLOAD_URLS = {
-    macOS: '/downloads/Octopunk-macos.dmg',
-    Windows: '/downloads/Octopunk-windows.exe',
-    Linux: '/downloads/Octopunk-linux.AppImage'
-  };
-
   // Fallback prices if API fails
   const FALLBACK_PRICES = {
     monthly: { amount: 9 },
@@ -26,19 +21,7 @@
     discount_percent: 17
   };
 
-  function detectOS() {
-    const userAgent = navigator.userAgent.toLowerCase();
-    const platform = navigator.platform?.toLowerCase() || '';
-
-    if (platform.includes('mac') || userAgent.includes('mac')) {
-      return 'macOS';
-    } else if (platform.includes('win') || userAgent.includes('win')) {
-      return 'Windows';
-    } else if (platform.includes('linux') || userAgent.includes('linux')) {
-      return 'Linux';
-    }
-    return null;
-  }
+  $: primaryDownload = detected && release ? getDownloadForPlatform(release, detected.platform) : null;
 
   function toggleDropdown() {
     dropdownOpen = !dropdownOpen;
@@ -52,6 +35,11 @@
     if (dropdownOpen && dropdownButton && !dropdownButton.contains(event.target)) {
       closeDropdown();
     }
+  }
+
+  function getArtifactUrl(platform) {
+    const artifact = getDownloadForPlatform(release, platform);
+    return artifact?.download_url || null;
   }
 
   // Determine which prices are available
@@ -82,10 +70,8 @@
   $: periodLabel = billingInterval === 'monthly' ? 'month' : 'year';
 
   onMount(async () => {
-    detectedOS = detectOS();
-    if (detectedOS) {
-      downloadUrl = DOWNLOAD_URLS[detectedOS];
-    }
+    detected = detectOS();
+    release = await fetchLatestDownloads('stable');
 
     document.addEventListener('click', handleClickOutside);
 
@@ -95,7 +81,6 @@
     } catch (err) {
       console.error('Failed to fetch pricing:', err);
       pricingError = err.message;
-      // Fall back to default prices
       pricing = FALLBACK_PRICES;
     } finally {
       pricingLoading = false;
@@ -150,9 +135,13 @@
               <li>No time limits, no restrictions</li>
             </ul>
             <div class="pricing-card-footer">
-              {#if detectedOS}
-                <a href={downloadUrl} class="btn btn-secondary btn-block">
-                  Download for {detectedOS}
+              {#if !release}
+                <a href="https://github.com/OctoPunkIO/OctoPunk/releases" class="btn btn-secondary btn-block" target="_blank" rel="noopener">
+                  Download Octopunk
+                </a>
+              {:else if detected && primaryDownload}
+                <a href={primaryDownload.download_url} class="btn btn-secondary btn-block">
+                  Download for {detected.os}
                 </a>
               {:else}
                 <div class="download-dropdown" bind:this={dropdownButton}>
@@ -164,15 +153,14 @@
                   </button>
                   {#if dropdownOpen}
                     <div class="dropdown-menu">
-                      <a href={DOWNLOAD_URLS.macOS} class="dropdown-item" on:click={closeDropdown}>
-                        macOS <span class="dropdown-item-ext">.dmg</span>
-                      </a>
-                      <a href={DOWNLOAD_URLS.Windows} class="dropdown-item" on:click={closeDropdown}>
-                        Windows <span class="dropdown-item-ext">.exe</span>
-                      </a>
-                      <a href={DOWNLOAD_URLS.Linux} class="dropdown-item" on:click={closeDropdown}>
-                        Linux <span class="dropdown-item-ext">.AppImage</span>
-                      </a>
+                      {#each ALL_PLATFORMS as plat}
+                        {@const url = getArtifactUrl(plat.platform)}
+                        {#if url}
+                          <a href={url} class="dropdown-item" on:click={closeDropdown}>
+                            {plat.label}
+                          </a>
+                        {/if}
+                      {/each}
                     </div>
                   {/if}
                 </div>
