@@ -1,0 +1,256 @@
+/**
+ * Dark Theme - Semantic Token Mappings
+ *
+ * Maps semantic tokens to base color scale values.
+ * This is the default GitHub-inspired dark theme.
+ */
+
+/* Default fallback - ensures variables are defined before JS loads */
+:root {
+  /* ===== BACKGROUND COLORS ===== */
+  --color-bg-primary: var(--gray-1000);
+  --color-bg-secondary: var(--gray-975);
+  --color-bg-tertiary: var(--gray-950);
+  --color-bg-elevated: var(--gray-850);
+  --color-bg-overlay: var(--gray-900);
+  --color-bg-inset: var(--black);
+
+  /* ===== TEXT COLORS ===== */
+  --color-text-primary: var(--gray-100);
+  --color-text-secondary: var(--gray-300);
+  --color-text-tertiary: var(--gray-400);
+  --color-text-disabled: var(--gray-500);
+  --color-text-inverse: var(--gray-900);
+  --color-text-link: var(--blue-500);
+  --color-text-link-hover: var(--blue-400);
+
+  /* ===== BORDER COLORS ===== */
+  --color-border-primary: var(--gray-800);
+  --color-border-secondary: var(--gray-850);
+  --color-border-tertiary: var(--gray-900);
+  --color-border-focus: var(--blue-500);
+  --color-border-muted: var(--gray-900);
+
+  /* ===== COMPONENT BACKGROUNDS ===== */
+  --color-component-bg: var(--gray-950);
+  --color-component-bg-hover: var(--gray-900);
+  --color-component-bg-active: var(--gray-850);
+  --color-component-bg-selected: var(--gray-850);
+
+  /* ===== BUTTON COLORS ===== */
+  --color-btn-primary-bg: var(--green-600);
+  --color-btn-primary-bg-hover: var(--green-500);
+  --color-btn-primary-text: var(--white);
+  --color-btn-primary-border: var(--green-700);
+
+  --color-btn-secondary-bg: var(--gray-850);
+  --color-btn-secondary-bg-hover: var(--gray-800);
+  --color-btn-secondary-text: var(--gray-100);
+  --color-btn-secondary-border: var(--gray-700);
+
+  --color-btn-danger-bg: var(--red-600);
+  --color-btn-danger-bg-hover: var(--red-500);
+  --color-btn-danger-text: var(--white);
+  --color-btn-danger-border: var(--red-700);
+
+  /* ===== STATE COLORS (Primer-style) ===== */
+  /* These are legacy variables - see full state colors below */
+  --color-success-fg: var(--green-500);
+  --color-danger-fg: var(--red-500);
+  --color-warning-fg: var(--yellow-500);
+  --color-info-fg: var(--blue-500);
+
+  /* ===== ACCENT COLORS ===== */
+  --color-accent-primary: var(--blue-500);
+  --color-accent-secondary: var(--purple-500);
+  --color-accent-tertiary: var(--pink-500);
+}
+
+html[data-theme="dark"] {
+  /* ===== BACKGROUND COLORS ===== */
+  --color-bg-primary: var(--gray-1000);        /* Main app background (#0d1117) */
+  --color-bg-secondary: var(--gray-975);       /* Secondary panels, cards (#161b22) */
+  --color-bg-tertiary: var(--gray-950);        /* Tertiary backgrounds, hover states (#1c2128) */
+  --color-bg-elevated: var(--gray-850);        /* Elevated surfaces, modals (#2d333b) */
+  --color-bg-overlay: var(--gray-900);         /* Overlay backgrounds (#24292f) */
+  --color-bg-inset: var(--black);              /* Inset areas, code blocks (#000000) */
+
+  /* ===== TEXT COLORS ===== */
+  --color-text-primary: var(--gray-100);       /* Primary text (#eaeef2) */
+  --color-text-secondary: var(--gray-300);     /* Secondary text (#afb8c1) */
+  --color-text-tertiary: var(--gray-400);      /* Tertiary text, placeholders (#8c959f) */
+  --color-text-disabled: var(--gray-500);      /* Disabled text (#6e7781) */
+  --color-text-inverse: var(--white);          /* Text on dark backgrounds */
+  --color-text-link: var(--blue-400);          /* Links (#218bff) */
+  --color-text-link-hover: var(--blue-300);    /* Links on hover (#54aeff) */
+
+  /* ===== BORDER COLORS ===== */
+  --color-border-primary: var(--gray-850);     /* Primary borders (#2d333b) */
+  --color-border-secondary: var(--gray-900);   /* Secondary borders (#24292f) */
+  --color-border-tertiary: var(--gray-950);    /* Subtle borders (#1c2128) */
+  --color-border-focus: var(--blue-500);       /* Focus rings (#1f6feb) */
+  --color-border-muted: var(--gray-975);       /* Muted borders (#161b22) */
+
+  /* ===== COMPONENT BACKGROUNDS ===== */
+  --color-component-bg: var(--gray-975);       /* Default component bg (#161b22) */
+  --color-component-bg-hover: var(--gray-950); /* Hover state (#1c2128) */
+  --color-component-bg-active: var(--gray-900);/* Active state (#24292f) */
+  --color-component-bg-selected: var(--gray-850); /* Selected state (#2d333b) */
+
+  /* ===== BUTTON COLORS ===== */
+  /* Primary Buttons */
+  --color-btn-primary-bg: var(--green-600);
+  --color-btn-primary-bg-hover: var(--green-500);
+  --color-btn-primary-text: var(--white);
+  --color-btn-primary-border: var(--green-700);
+
+  /* Secondary Buttons */
+  --color-btn-secondary-bg: var(--gray-850);
+  --color-btn-secondary-bg-hover: var(--gray-800);
+  --color-btn-secondary-text: var(--gray-100);
+  --color-btn-secondary-border: var(--gray-700);
+
+  /* Danger Buttons */
+  --color-btn-danger-bg: var(--red-600);
+  --color-btn-danger-bg-hover: var(--red-500);
+  --color-btn-danger-text: var(--white);
+  --color-btn-danger-border: var(--red-700);
+
+  /* ===== STATE COLORS ===== */
+  /* Success */
+  --color-success-emphasis: var(--green-500);
+  --color-success-muted: var(--green-900);
+  --color-success-subtle: var(--green-950);
+  --color-success-bg: rgba(46, 160, 67, 0.15);
+  --color-success-bg-hover: rgba(46, 160, 67, 0.25);
+  --color-success-border: var(--green-600);
+  --color-success-text: var(--green-400);
+
+  /* Error/Danger */
+  --color-danger-emphasis: var(--red-500);
+  --color-danger-muted: var(--red-900);
+  --color-danger-subtle: var(--red-950);
+  --color-danger-bg: rgba(248, 81, 73, 0.15);
+  --color-danger-bg-hover: rgba(248, 81, 73, 0.25);
+  --color-danger-border: var(--red-600);
+  --color-danger-text: var(--red-400);
+
+  /* Warning */
+  --color-warning-emphasis: var(--orange-400);
+  --color-warning-muted: var(--yellow-900);
+  --color-warning-subtle: var(--yellow-950);
+  --color-warning-bg: rgba(187, 128, 9, 0.15);
+  --color-warning-bg-hover: rgba(187, 128, 9, 0.25);
+  --color-warning-border: var(--orange-600);
+  --color-warning-text: var(--orange-300);
+
+  /* Info */
+  --color-info-emphasis: var(--blue-500);
+  --color-info-muted: var(--blue-900);
+  --color-info-subtle: var(--blue-950);
+  --color-info-bg: rgba(33, 139, 255, 0.15);
+  --color-info-bg-hover: rgba(33, 139, 255, 0.25);
+  --color-info-border: var(--blue-600);
+  --color-info-text: var(--blue-400);
+
+  /* ===== ISSUE/PR STATES ===== */
+  --color-state-open-bg: var(--green-600);
+  --color-state-open-text: var(--white);
+  --color-state-closed-bg: var(--red-600);
+  --color-state-closed-text: var(--white);
+  --color-state-merged-bg: var(--purple-600);
+  --color-state-merged-text: var(--white);
+  --color-state-draft-bg: var(--gray-600);
+  --color-state-draft-text: var(--white);
+
+  /* ===== DIFF COLORS ===== */
+  /* Additions */
+  --color-diff-addition-bg: var(--diff-addition-bg);
+  --color-diff-addition-text: var(--diff-addition-fg);
+  --color-diff-addition-border: var(--diff-addition-border);
+  --color-diff-addition-line-bg: rgba(46, 160, 67, 0.25);
+
+  /* Deletions */
+  --color-diff-deletion-bg: var(--diff-deletion-bg);
+  --color-diff-deletion-text: var(--diff-deletion-fg);
+  --color-diff-deletion-border: var(--diff-deletion-border);
+  --color-diff-deletion-line-bg: rgba(248, 81, 73, 0.25);
+
+  /* Changes */
+  --color-diff-change-bg: var(--diff-change-bg);
+  --color-diff-change-text: var(--diff-change-fg);
+  --color-diff-change-border: var(--diff-change-border);
+
+  /* ===== CODE/SYNTAX COLORS ===== */
+  --color-code-bg: var(--black);
+  --color-code-text: var(--gray-100);
+  --color-code-line-number: var(--gray-500);
+  --color-code-line-number-bg: var(--gray-975);
+  --color-code-line-highlight: rgba(187, 128, 9, 0.1);
+  --color-code-comment: var(--gray-400);
+  --color-code-keyword: var(--red-400);
+  --color-code-string: var(--blue-300);
+  --color-code-function: var(--purple-400);
+  --color-code-variable: var(--orange-300);
+
+  /* ===== INPUT COLORS ===== */
+  --color-input-bg: var(--gray-1000);
+  --color-input-border: var(--gray-850);
+  --color-input-border-focus: var(--blue-500);
+  --color-input-text: var(--gray-100);
+  --color-input-placeholder: var(--gray-500);
+
+  /* ===== LABEL COLORS ===== */
+  --color-label-bg: var(--gray-800);
+  --color-label-text: var(--gray-200);
+  --color-label-border: var(--gray-700);
+
+  /* ===== TIMELINE COLORS ===== */
+  --color-timeline-badge-bg: var(--gray-850);
+  --color-timeline-line: var(--gray-850);
+
+  /* ===== AVATAR COLORS ===== */
+  --color-avatar-border: var(--gray-700);
+  --color-avatar-bg: var(--gray-850);
+
+  /* ===== TOOLTIP/POPOVER COLORS ===== */
+  --color-tooltip-bg: var(--gray-900);
+  --color-tooltip-text: var(--gray-100);
+  --color-tooltip-border: var(--gray-700);
+
+  /* ===== SHADOW COLORS ===== */
+  --color-shadow-small: rgba(0, 0, 0, 0.12);
+  --color-shadow-medium: rgba(0, 0, 0, 0.24);
+  --color-shadow-large: rgba(0, 0, 0, 0.36);
+  --color-shadow-focus: rgba(33, 139, 255, 0.4);
+
+  /* ===== SCROLLBAR COLORS ===== */
+  --color-scrollbar-thumb: var(--gray-700);
+  --color-scrollbar-thumb-hover: var(--gray-600);
+  --color-scrollbar-track: var(--gray-1000);
+
+  /* ===== SELECTION COLORS ===== */
+  --color-selection-bg: rgba(33, 139, 255, 0.3);
+  --color-selection-text: var(--white);
+
+  /* ===== HEADER/NAV COLORS ===== */
+  --color-header-bg: var(--gray-975);
+  --color-header-border: var(--gray-850);
+  --color-header-text: var(--gray-100);
+
+  /* ===== SIDEBAR COLORS ===== */
+  --color-sidebar-bg: var(--gray-975);
+  --color-sidebar-border: var(--gray-850);
+  --color-sidebar-item-hover: var(--gray-950);
+  --color-sidebar-item-active: var(--gray-900);
+
+  /* ===== BADGE/COUNTER COLORS ===== */
+  --color-badge-bg: var(--gray-800);
+  --color-badge-text: var(--gray-200);
+  --color-badge-border: var(--gray-700);
+
+  /* ===== ACCENT COLORS ===== */
+  --color-accent-primary: var(--blue-500);
+  --color-accent-secondary: var(--purple-500);
+  --color-accent-tertiary: var(--pink-500);
+}

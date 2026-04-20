@@ -1,0 +1,128 @@
+/**
+ * Base Color Scale Tokens
+ *
+ * These are the raw color values that semantic tokens map to.
+ * Color scales follow GitHub's Primer design system palette.
+ * Each scale ranges from 50 (lightest) to 900 (darkest).
+ */
+
+:root {
+  /* ===== GRAY SCALE ===== */
+  /* Neutral backgrounds, borders, and text */
+  --gray-50: #f6f8fa;
+  --gray-100: #eaeef2;
+  --gray-200: #d0d7de;
+  --gray-300: #afb8c1;
+  --gray-400: #8c959f;
+  --gray-500: #6e7781;
+  --gray-600: #57606a;
+  --gray-700: #424a53;
+  --gray-800: #32383f;
+  --gray-850: #2d333b;
+  --gray-900: #24292f;
+  --gray-950: #1c2128;
+  --gray-975: #161b22;
+  --gray-1000: #0d1117;
+
+  /* ===== BLUE SCALE ===== */
+  /* Primary actions, links, informational states */
+  --blue-50: #ddf4ff;
+  --blue-100: #b6e3ff;
+  --blue-200: #80ccff;
+  --blue-300: #54aeff;
+  --blue-400: #218bff;
+  --blue-500: #1f6feb;
+  --blue-600: #0969da;
+  --blue-700: #0550ae;
+  --blue-800: #033d8b;
+  --blue-900: #0a3069;
+
+  /* ===== GREEN SCALE ===== */
+  /* Success states, additions, positive actions */
+  --green-50: #dafbe1;
+  --green-100: #aceebb;
+  --green-200: #6fdd8b;
+  --green-300: #4ac26b;
+  --green-400: #2da44e;
+  --green-500: #1a7f37;
+  --green-600: #116329;
+  --green-700: #044f1e;
+  --green-800: #003d16;
+  --green-900: #002d11;
+
+  /* ===== RED SCALE ===== */
+  /* Error states, deletions, warnings */
+  --red-50: #ffebe9;
+  --red-100: #ffcecb;
+  --red-200: #ffaba8;
+  --red-300: #ff8182;
+  --red-400: #fa4549;
+  --red-500: #cf222e;
+  --red-600: #a40e26;
+  --red-700: #82071e;
+  --red-800: #660018;
+  --red-900: #4c0014;
+
+  /* ===== ORANGE SCALE ===== */
+  /* Warnings, pending states */
+  --orange-50: #fff8c5;
+  --orange-100: #fae17d;
+  --orange-200: #eac54f;
+  --orange-300: #d4a72c;
+  --orange-400: #bf8700;
+  --orange-500: #9a6700;
+  --orange-600: #7d4e00;
+  --orange-700: #633c01;
+  --orange-800: #4d2d00;
+  --orange-900: #3b2300;
+
+  /* ===== PURPLE SCALE ===== */
+  /* Secondary actions, special states */
+  --purple-50: #fbefff;
+  --purple-100: #ecd8ff;
+  --purple-200: #d8b9ff;
+  --purple-300: #c297ff;
+  --purple-400: #a475f9;
+  --purple-500: #8250df;
+  --purple-600: #6639ba;
+  --purple-700: #512a97;
+  --purple-800: #3e1f79;
+  --purple-900: #2e1461;
+
+  /* ===== PINK SCALE ===== */
+  /* Accent colors, highlights */
+  --pink-50: #ffeff7;
+  --pink-100: #ffd3eb;
+  --pink-200: #ffadda;
+  --pink-300: #ff80c8;
+  --pink-400: #e85aad;
+  --pink-500: #bf3989;
+  --pink-600: #99286e;
+  --pink-700: #772057;
+  --pink-800: #611347;
+  --pink-900: #4d0336;
+
+  /* ===== DIFF COLORS ===== */
+  /* For code diffs and file changes */
+  --diff-addition-bg: rgba(46, 160, 67, 0.15);
+  --diff-addition-fg: #3fb950;
+  --diff-addition-border: rgba(46, 160, 67, 0.4);
+
+  --diff-deletion-bg: rgba(248, 81, 73, 0.15);
+  --diff-deletion-fg: #f85149;
+  --diff-deletion-border: rgba(248, 81, 73, 0.4);
+
+  --diff-change-bg: rgba(187, 128, 9, 0.15);
+  --diff-change-fg: #d29922;
+  --diff-change-border: rgba(187, 128, 9, 0.4);
+
+  /* ===== SPECIAL COLORS ===== */
+  /* Colors that don't fit into a scale */
+  --white: #ffffff;
+  --black: #000000;
+  --transparent: transparent;
+
+  /* Overlay backgrounds */
+  --overlay-backdrop: rgba(13, 17, 23, 0.8);
+  --overlay-shadow: rgba(0, 0, 0, 0.12);
+}
