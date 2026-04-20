@@ -81,7 +81,7 @@
     } catch (err) {
       console.error('Failed to fetch pricing:', err);
       pricingError = err.message;
-      pricing = FALLBACK_PRICES;
+      pricing = null;
     } finally {
       pricingLoading = false;
     }
@@ -176,37 +176,44 @@
               <p class="pricing-tagline">For professional developers</p>
             </div>
 
-            <!-- Billing Toggle - only show if both monthly AND annual prices exist -->
-            {#if !pricingLoading && hasBothPrices}
-              <div class="billing-toggle">
-                <button
-                  class="toggle-btn"
-                  class:active={billingInterval === 'monthly'}
-                  on:click={() => billingInterval = 'monthly'}
-                >
-                  Monthly
-                </button>
-                <button
-                  class="toggle-btn"
-                  class:active={billingInterval === 'annual'}
-                  on:click={() => billingInterval = 'annual'}
-                >
-                  Annual
-                  {#if discountPercent > 0}
-                    <span class="discount-badge">Save {discountPercent}%</span>
-                  {/if}
-                </button>
+            {#if pricingLoading}
+              <div class="pricing-card-price">
+                <span class="price price-loading">...</span>
+              </div>
+            {:else if pricing}
+              <!-- Billing Toggle - only show if both monthly AND annual prices exist -->
+              {#if hasBothPrices}
+                <div class="billing-toggle">
+                  <button
+                    class="toggle-btn"
+                    class:active={billingInterval === 'monthly'}
+                    on:click={() => billingInterval = 'monthly'}
+                  >
+                    Monthly
+                  </button>
+                  <button
+                    class="toggle-btn"
+                    class:active={billingInterval === 'annual'}
+                    on:click={() => billingInterval = 'annual'}
+                  >
+                    Annual
+                    {#if discountPercent > 0}
+                      <span class="discount-badge">Save {discountPercent}%</span>
+                    {/if}
+                  </button>
+                </div>
+              {/if}
+
+              <div class="pricing-card-price">
+                <span class="price">${displayPrice}</span>
+                <span class="period">/{periodLabel}</span>
+              </div>
+            {:else}
+              <div class="pricing-card-price">
+                <span class="price price-coming-soon">Pricing coming soon</span>
               </div>
             {/if}
 
-            <div class="pricing-card-price">
-              {#if pricingLoading}
-                <span class="price price-loading">...</span>
-              {:else}
-                <span class="price">${displayPrice}</span>
-              {/if}
-              <span class="period">/{periodLabel}</span>
-            </div>
             <ul class="pricing-features">
               <li>Everything in Open Source</li>
               <li>Unlimited private repositories</li>
@@ -215,7 +222,11 @@
               <li>Early access to new features</li>
             </ul>
             <div class="pricing-card-footer">
-              <a href="/dashboard?interval={billingInterval}" class="btn btn-primary btn-block">Subscribe with GitHub</a>
+              {#if pricing}
+                <a href="/dashboard?interval={billingInterval}" class="btn btn-primary btn-block">Subscribe with GitHub</a>
+              {:else}
+                <button class="btn btn-primary btn-block" disabled>Coming Soon</button>
+              {/if}
             </div>
           </div>
 
@@ -433,6 +444,12 @@
 
   .price-loading {
     opacity: 0.5;
+  }
+
+  .price-coming-soon {
+    font-size: 20px;
+    color: var(--color-text-secondary);
+    font-weight: 500;
   }
 
   .period {
