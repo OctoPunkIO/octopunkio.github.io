@@ -1,6 +1,17 @@
 import { getLatestRelease } from './api.js';
 
 /**
+ * Read the release stream from the current URL's ?stream= param.
+ * Only 'stable' and 'beta' are honored; anything else falls back to 'stable'.
+ * Safe to call during SSR (returns 'stable' when window is unavailable).
+ */
+export function getStreamFromURL() {
+  if (typeof window === 'undefined') return 'stable';
+  const s = new URLSearchParams(window.location.search).get('stream');
+  return s === 'beta' ? 'beta' : 'stable';
+}
+
+/**
  * Detect the user's OS family (not architecture). Safe to call synchronously.
  * Returns { os, family, label } or null.
  *   family: 'mac' | 'linux' | 'windows'

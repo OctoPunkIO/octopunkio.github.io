@@ -13,7 +13,7 @@
     getSubscriptionState,
     undoCancelSubscription
   } from '$lib/api.js';
-  import { detectOS, ALL_PLATFORMS, fetchLatestDownloads, getDownloadForPlatform } from '$lib/downloads.js';
+  import { detectOS, ALL_PLATFORMS, fetchLatestDownloads, getDownloadForPlatform, getStreamFromURL } from '$lib/downloads.js';
   import { pollingManager } from '$lib/utils/pollingManager.js';
 
   let user = null;
@@ -39,6 +39,7 @@
   // Downloads
   let detected = null;
   let release = null;
+  let selectedStream = 'stable';
 
   // Helper to check if an action is allowed
   function canDoAction(action) {
@@ -46,10 +47,27 @@
     return subscriptionState.allowed_actions.includes(action);
   }
 
+  async function loadRelease(stream) {
+    release = null;
+    release = await fetchLatestDownloads(stream);
+  }
+
+  function onStreamChange() {
+    const url = new URL(window.location.href);
+    if (selectedStream === 'stable') {
+      url.searchParams.delete('stream');
+    } else {
+      url.searchParams.set('stream', selectedStream);
+    }
+    window.history.replaceState({}, '', url.pathname + url.search);
+    loadRelease(selectedStream);
+  }
+
   onMount(async () => {
     // Load download info (non-blocking)
+    selectedStream = getStreamFromURL();
     detectOS().then(d => { detected = d; });
-    fetchLatestDownloads('stable').then(r => { release = r; });
+    loadRelease(selectedStream);
 
     // Reset redirect states (handles browser back button from Stripe checkout)
     subscribing = false;
@@ -654,6 +672,16 @@
           <p class="text-secondary mt-4">
             Download the Octopunk desktop app to get started.
           </p>
+          <div class="stream-select mt-4">
+            <label for="stream-select">Release channel</label>
+            <select id="stream-select" bind:value={selectedStream} on:change={onStreamChange}>
+              <option value="stable">Stable</option>
+              <option value="beta">Beta</option>
+            </select>
+            {#if release?.version}
+              <span class="text-secondary">{release.version}</span>
+            {/if}
+          </div>
           <div class="download-buttons mt-4">
             {#if release}
               {#if detected}
@@ -672,7 +700,7 @@
               {/each}
             {:else}
               <!-- Source repo is private; don't fall back to github.com/.../releases. -->
-              <button class="btn btn-primary" disabled>Downloads coming soon</button>
+              <button class="btn btn-primary" disabled>No {selectedStream} release available yet</button>
             {/if}
           </div>
         </div>
@@ -905,6 +933,26 @@
     display: flex;
     gap: 12px;
     flex-wrap: wrap;
+  }
+
+  .stream-select {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+  }
+
+  .stream-select label {
+    color: var(--color-text-secondary, inherit);
+  }
+
+  .stream-select select {
+    padding: 4px 8px;
+    border: 1px solid var(--color-border, #d0d7de);
+    border-radius: 6px;
+    background: var(--color-surface, #fff);
+    color: var(--color-text, inherit);
+    font-size: 14px;
   }
 
   .alert {

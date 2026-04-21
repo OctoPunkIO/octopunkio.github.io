@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte';
   import { getPricing } from '$lib/api.js';
-  import { detectOS, ALL_PLATFORMS, fetchLatestDownloads, getDownloadForPlatform } from '$lib/downloads.js';
+  import { detectOS, ALL_PLATFORMS, fetchLatestDownloads, getDownloadForPlatform, getStreamFromURL } from '$lib/downloads.js';
 
   let detected = null;
   let release = null;
@@ -71,7 +71,7 @@
 
   onMount(async () => {
     detected = await detectOS();
-    release = await fetchLatestDownloads('stable');
+    release = await fetchLatestDownloads(getStreamFromURL());
 
     document.addEventListener('click', handleClickOutside);
 
