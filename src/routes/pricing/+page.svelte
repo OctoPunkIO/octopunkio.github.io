@@ -136,9 +136,10 @@
             </ul>
             <div class="pricing-card-footer">
               {#if !release}
-                <a href="https://github.com/OctoPunkIO/OctoPunk/releases" class="btn btn-secondary btn-block" target="_blank" rel="noopener">
-                  Download Octopunk
-                </a>
+                <!-- Source repo is private; don't fall back to github.com/.../releases. -->
+                <button class="btn btn-secondary btn-block" disabled>
+                  Downloads coming soon
+                </button>
               {:else if detected && primaryDownload}
                 <a href={primaryDownload.download_url} class="btn btn-secondary btn-block">
                   Download for {detected.os}

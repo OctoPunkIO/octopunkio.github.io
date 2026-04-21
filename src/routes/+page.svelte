@@ -97,15 +97,17 @@
 
         <div class="cta mt-8">
           {#if !release}
-            <!-- No release available or API unreachable — show GitHub link as fallback -->
-            <a href="https://github.com/OctoPunkIO/OctoPunk/releases" class="btn btn-primary btn-large download-btn" target="_blank" rel="noopener">
+            <!-- No release registered in the API yet. We intentionally do NOT
+                 fall back to github.com/.../releases because the source repo
+                 is private and that link 404s for anonymous users. -->
+            <button class="btn btn-primary btn-large download-btn" disabled>
               <svg viewBox="0 0 16 16" width="20" height="20" fill="currentColor">
                 <path d="M2.75 14A1.75 1.75 0 0 1 1 12.25v-2.5a.75.75 0 0 1 1.5 0v2.5c0 .138.112.25.25.25h10.5a.25.25 0 0 0 .25-.25v-2.5a.75.75 0 0 1 1.5 0v2.5A1.75 1.75 0 0 1 13.25 14Z"/>
                 <path d="M7.25 7.689V2a.75.75 0 0 1 1.5 0v5.689l1.97-1.969a.749.749 0 1 1 1.06 1.06l-3.25 3.25a.749.749 0 0 1-1.06 0L4.22 6.78a.749.749 0 1 1 1.06-1.06l1.97 1.969Z"/>
               </svg>
-              Download Octopunk
-            </a>
-            <p class="download-alt text-secondary mt-4">View releases on GitHub</p>
+              Downloads coming soon
+            </button>
+            <p class="download-alt text-secondary mt-4">No release is available yet — check back shortly.</p>
           {:else if detected && primaryDownload}
             <!-- OS detected and artifact available -->
             <div class="flex gap-2 items-center" style="flex-wrap: wrap;">

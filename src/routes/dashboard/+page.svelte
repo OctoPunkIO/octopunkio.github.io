@@ -671,7 +671,8 @@
                 {/if}
               {/each}
             {:else}
-              <a href="https://github.com/OctoPunkIO/OctoPunk/releases" class="btn btn-primary" target="_blank" rel="noopener">View Downloads on GitHub</a>
+              <!-- Source repo is private; don't fall back to github.com/.../releases. -->
+              <button class="btn btn-primary" disabled>Downloads coming soon</button>
             {/if}
           </div>
         </div>
