@@ -70,7 +70,7 @@
   $: periodLabel = billingInterval === 'monthly' ? 'month' : 'year';
 
   onMount(async () => {
-    detected = detectOS();
+    detected = await detectOS();
     release = await fetchLatestDownloads('stable');
 
     document.addEventListener('click', handleClickOutside);

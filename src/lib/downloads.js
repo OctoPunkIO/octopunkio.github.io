@@ -1,23 +1,62 @@
 import { getLatestRelease } from './api.js';
 
 /**
- * Detect the user's operating system.
- * Returns { os, platform, label } or null if undetectable.
+ * Detect the user's OS family (not architecture). Safe to call synchronously.
+ * Returns { os, family, label } or null.
+ *   family: 'mac' | 'linux' | 'windows'
  */
-export function detectOS() {
+export function detectOSFamily() {
   if (typeof navigator === 'undefined') return null;
 
   const ua = navigator.userAgent.toLowerCase();
   const plat = (navigator.userAgentData?.platform || navigator.platform || '').toLowerCase();
 
   if (plat.includes('mac') || ua.includes('mac')) {
-    return { os: 'macOS', platform: 'darwin-arm64', label: 'macOS (Apple Silicon)' };
+    return { os: 'macOS', family: 'mac', label: 'macOS' };
   }
   if (plat.includes('linux') || ua.includes('linux')) {
-    return { os: 'Linux', platform: 'linux-x64', label: 'Linux (x64)' };
+    return { os: 'Linux', family: 'linux', label: 'Linux' };
   }
   if (plat.includes('win') || ua.includes('win')) {
-    return { os: 'Windows', platform: 'windows-x64', label: 'Windows (x64)' };
+    return { os: 'Windows', family: 'windows', label: 'Windows' };
+  }
+
+  return null;
+}
+
+/**
+ * Detect the user's OS and best-guess architecture.
+ * Async because macOS arch detection requires UA Client Hints high-entropy values
+ * (Chromium-family only). Returns { os, family, platform, label, archCertain }.
+ *   archCertain: true when we could read the real architecture; false when we're guessing.
+ */
+export async function detectOS() {
+  const fam = detectOSFamily();
+  if (!fam) return null;
+
+  if (fam.family === 'mac') {
+    let arch = null;
+    try {
+      const hints = await navigator.userAgentData?.getHighEntropyValues?.(['architecture']);
+      if (hints?.architecture) {
+        arch = hints.architecture === 'arm' ? 'arm64' : 'x64';
+      }
+    } catch {
+      // Safari/Firefox don't expose userAgentData — arch stays null.
+    }
+    // Default guess: Apple Silicon (majority of Macs sold since late 2020).
+    const isCertain = arch !== null;
+    const platform = arch === 'x64' ? 'darwin-x64' : 'darwin-arm64';
+    const label = platform === 'darwin-arm64' ? 'macOS (Apple Silicon)' : 'macOS (Intel)';
+    return { os: fam.os, family: 'mac', platform, label, archCertain: isCertain };
+  }
+
+  if (fam.family === 'linux') {
+    return { os: fam.os, family: 'linux', platform: 'linux-x64', label: 'Linux (x64)', archCertain: true };
+  }
+
+  if (fam.family === 'windows') {
+    return { os: fam.os, family: 'windows', platform: 'windows-x64', label: 'Windows (x64)', archCertain: true };
   }
 
   return null;

@@ -11,7 +11,17 @@
   let dropdownButton;
 
   $: primaryDownload = detected && release ? getDownloadForPlatform(release, detected.platform) : null;
-  $: altPlatforms = ALL_PLATFORMS.filter(p => p.platform !== detected?.platform);
+  // When we couldn't determine Mac architecture, surface both Mac builds as peers.
+  $: macPeer = detected?.family === 'mac' && release
+    ? getDownloadForPlatform(release, detected.platform === 'darwin-arm64' ? 'darwin-x64' : 'darwin-arm64')
+    : null;
+  $: macPeerLabel = detected?.family === 'mac'
+    ? (detected.platform === 'darwin-arm64' ? 'macOS (Intel)' : 'macOS (Apple Silicon)')
+    : '';
+  $: altPlatforms = ALL_PLATFORMS.filter(p =>
+    p.platform !== detected?.platform &&
+    !(detected?.family === 'mac' && (p.platform === 'darwin-arm64' || p.platform === 'darwin-x64'))
+  );
 
   function toggleDropdown() {
     dropdownOpen = !dropdownOpen;
@@ -30,7 +40,7 @@
   onMount(async () => {
     isLoggedIn = await isAuthenticated();
     loading = false;
-    detected = detectOS();
+    detected = await detectOS();
     release = await fetchLatestDownloads('stable');
 
     document.addEventListener('click', handleClickOutside);
@@ -98,21 +108,33 @@
             <p class="download-alt text-secondary mt-4">View releases on GitHub</p>
           {:else if detected && primaryDownload}
             <!-- OS detected and artifact available -->
-            <a href={primaryDownload.download_url} class="btn btn-primary btn-large download-btn">
-              <svg viewBox="0 0 16 16" width="20" height="20" fill="currentColor">
-                <path d="M2.75 14A1.75 1.75 0 0 1 1 12.25v-2.5a.75.75 0 0 1 1.5 0v2.5c0 .138.112.25.25.25h10.5a.25.25 0 0 0 .25-.25v-2.5a.75.75 0 0 1 1.5 0v2.5A1.75 1.75 0 0 1 13.25 14Z"/>
-                <path d="M7.25 7.689V2a.75.75 0 0 1 1.5 0v5.689l1.97-1.969a.749.749 0 1 1 1.06 1.06l-3.25 3.25a.749.749 0 0 1-1.06 0L4.22 6.78a.749.749 0 1 1 1.06-1.06l1.97 1.969Z"/>
-              </svg>
-              Download for {detected.os}
-            </a>
+            <div class="flex gap-2 items-center" style="flex-wrap: wrap;">
+              <a href={primaryDownload.download_url} class="btn btn-primary btn-large download-btn">
+                <svg viewBox="0 0 16 16" width="20" height="20" fill="currentColor">
+                  <path d="M2.75 14A1.75 1.75 0 0 1 1 12.25v-2.5a.75.75 0 0 1 1.5 0v2.5c0 .138.112.25.25.25h10.5a.25.25 0 0 0 .25-.25v-2.5a.75.75 0 0 1 1.5 0v2.5A1.75 1.75 0 0 1 13.25 14Z"/>
+                  <path d="M7.25 7.689V2a.75.75 0 0 1 1.5 0v5.689l1.97-1.969a.749.749 0 1 1 1.06 1.06l-3.25 3.25a.749.749 0 0 1-1.06 0L4.22 6.78a.749.749 0 1 1 1.06-1.06l1.97 1.969Z"/>
+                </svg>
+                Download for {detected.label || detected.os}
+              </a>
+              {#if detected.family === 'mac' && macPeer}
+                <a href={macPeer.download_url} class="btn btn-large download-btn">
+                  <svg viewBox="0 0 16 16" width="20" height="20" fill="currentColor">
+                    <path d="M2.75 14A1.75 1.75 0 0 1 1 12.25v-2.5a.75.75 0 0 1 1.5 0v2.5c0 .138.112.25.25.25h10.5a.25.25 0 0 0 .25-.25v-2.5a.75.75 0 0 1 1.5 0v2.5A1.75 1.75 0 0 1 13.25 14Z"/>
+                    <path d="M7.25 7.689V2a.75.75 0 0 1 1.5 0v5.689l1.97-1.969a.749.749 0 1 1 1.06 1.06l-3.25 3.25a.749.749 0 0 1-1.06 0L4.22 6.78a.749.749 0 1 1 1.06-1.06l1.97 1.969Z"/>
+                  </svg>
+                  {macPeerLabel}
+                </a>
+              {/if}
+            </div>
             <p class="download-alt text-secondary mt-4">
-              {release.version} · or download for
-              {#each altPlatforms as alt}
-                {@const url = getArtifactUrl(alt.platform)}
-                {#if url}
-                  <a href={url}>{alt.label}</a>{' '}
-                {/if}
-              {/each}
+              {release.version}{#if altPlatforms.length > 0} · or download for
+                {#each altPlatforms as alt}
+                  {@const url = getArtifactUrl(alt.platform)}
+                  {#if url}
+                    <a href={url}>{alt.label}</a>{' '}
+                  {/if}
+                {/each}
+              {/if}
             </p>
           {:else}
             <!-- OS not detected or no artifact for this OS — show dropdown -->

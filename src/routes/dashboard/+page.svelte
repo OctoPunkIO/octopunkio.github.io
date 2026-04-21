@@ -48,7 +48,7 @@
 
   onMount(async () => {
     // Load download info (non-blocking)
-    detected = detectOS();
+    detectOS().then(d => { detected = d; });
     fetchLatestDownloads('stable').then(r => { release = r; });
 
     // Reset redirect states (handles browser back button from Stripe checkout)
