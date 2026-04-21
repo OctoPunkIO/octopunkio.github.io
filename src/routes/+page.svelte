@@ -80,15 +80,22 @@
             </button>
             <p class="download-alt text-secondary mt-4">No release is available yet — check back shortly.</p>
           {:else}
-            <div class="download-stack">
-              {#each orderedFamilies as fam, i (fam.family)}
-                <DownloadButton
-                  label={fam.label}
-                  artifacts={grouped[fam.family]}
-                  primary={i === 0}
-                  preferredPlatform={detected?.family === fam.family ? detected.platform : ''}
-                />
-              {/each}
+            <div class="download-triangle">
+              <DownloadButton
+                label={orderedFamilies[0].label}
+                artifacts={grouped[orderedFamilies[0].family]}
+                primary={true}
+                preferredPlatform={detected?.family === orderedFamilies[0].family ? detected.platform : ''}
+              />
+              <div class="download-triangle-row">
+                {#each orderedFamilies.slice(1) as fam (fam.family)}
+                  <DownloadButton
+                    label={fam.label}
+                    artifacts={grouped[fam.family]}
+                    primary={false}
+                  />
+                {/each}
+              </div>
             </div>
             <p class="download-alt text-secondary mt-4">{release.version}</p>
           {/if}
@@ -193,11 +200,18 @@
     gap: 8px;
   }
 
-  .download-stack {
+  .download-triangle {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 12px;
+  }
+
+  .download-triangle-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 
   .download-alt {

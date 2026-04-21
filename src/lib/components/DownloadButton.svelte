@@ -121,15 +121,23 @@
     padding: 10px 16px;
     color: var(--color-text-primary);
     text-decoration: none;
-    transition: background-color 0.15s ease;
+    border-left: 2px solid transparent;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
   }
 
-  .dropdown-item:hover {
-    background: var(--color-bg-tertiary);
+  .dropdown-item:hover,
+  .dropdown-item:focus-visible {
+    background: var(--color-bg-elevated);
+    border-left-color: var(--color-btn-primary-bg);
+    outline: none;
   }
 
   .dropdown-item-hint {
     color: var(--color-text-secondary);
     font-size: 12px;
+  }
+
+  .dropdown-item:hover .dropdown-item-hint {
+    color: var(--color-text-primary);
   }
 </style>
