@@ -84,6 +84,50 @@ export const ALL_PLATFORMS = [
 ];
 
 /**
+ * OS families in a stable rendering order. Each entry has the family key used
+ * internally, the display label, and the platform-prefix used to group
+ * artifacts from the API.
+ */
+export const OS_FAMILIES = [
+  { family: 'mac', label: 'macOS', platformPrefix: 'darwin-' },
+  { family: 'linux', label: 'Linux', platformPrefix: 'linux-' },
+  { family: 'windows', label: 'Windows', platformPrefix: 'windows-' },
+];
+
+/**
+ * Group a release's artifacts into { mac, linux, windows } buckets, each
+ * holding only the artifacts whose platform belongs to that OS family.
+ * Returns empty arrays for families with no artifacts.
+ */
+export function groupArtifactsByFamily(release) {
+  const buckets = { mac: [], linux: [], windows: [] };
+  if (!release?.artifacts) return buckets;
+  for (const a of release.artifacts) {
+    for (const f of OS_FAMILIES) {
+      if (a.platform?.startsWith(f.platformPrefix)) {
+        buckets[f.family].push(a);
+        break;
+      }
+    }
+  }
+  return buckets;
+}
+
+/**
+ * Human-friendly label for an artifact's architecture, e.g.
+ *   darwin-arm64 → "Apple Silicon", darwin-x64 → "Intel",
+ *   linux-x64    → "x64",           windows-x64 → "x64",
+ *   linux-arm64  → "ARM64".
+ */
+export function platformArchLabel(platform) {
+  if (platform === 'darwin-arm64') return 'Apple Silicon';
+  if (platform === 'darwin-x64') return 'Intel';
+  const arch = platform?.split('-').pop() || '';
+  if (arch === 'arm64') return 'ARM64';
+  return arch;
+}
+
+/**
  * Fetch latest release with all artifacts in a single API call.
  * Returns { version, releaseNotes, releaseUrl, artifacts } or null.
  * Each artifact: { platform, download_url, filename, sha256, size_bytes }

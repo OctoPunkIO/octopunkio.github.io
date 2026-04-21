@@ -1,61 +1,32 @@
 <script>
   import { onMount } from 'svelte';
   import { isAuthenticated, getGitHubAuthURL } from '$lib/api.js';
-  import { detectOS, ALL_PLATFORMS, fetchLatestDownloads, getDownloadForPlatform, getStreamFromURL } from '$lib/downloads.js';
+  import { detectOS, fetchLatestDownloads, getStreamFromURL, groupArtifactsByFamily, OS_FAMILIES } from '$lib/downloads.js';
+  import DownloadButton from '$lib/components/DownloadButton.svelte';
 
   let isLoggedIn = false;
   let loading = true;
   let detected = null;
   let release = null;
-  let dropdownOpen = false;
-  let dropdownButton;
 
-  $: primaryDownload = detected && release ? getDownloadForPlatform(release, detected.platform) : null;
-  // When we couldn't determine Mac architecture, surface both Mac builds as peers.
-  $: macPeer = detected?.family === 'mac' && release
-    ? getDownloadForPlatform(release, detected.platform === 'darwin-arm64' ? 'darwin-x64' : 'darwin-arm64')
-    : null;
-  $: macPeerLabel = detected?.family === 'mac'
-    ? (detected.platform === 'darwin-arm64' ? 'macOS (Intel)' : 'macOS (Apple Silicon)')
-    : '';
-  $: altPlatforms = ALL_PLATFORMS.filter(p =>
-    p.platform !== detected?.platform &&
-    !(detected?.family === 'mac' && (p.platform === 'darwin-arm64' || p.platform === 'darwin-x64'))
-  );
-
-  function toggleDropdown() {
-    dropdownOpen = !dropdownOpen;
-  }
-
-  function closeDropdown() {
-    dropdownOpen = false;
-  }
-
-  function handleClickOutside(event) {
-    if (dropdownOpen && dropdownButton && !dropdownButton.contains(event.target)) {
-      closeDropdown();
-    }
-  }
+  $: grouped = release ? groupArtifactsByFamily(release) : { mac: [], linux: [], windows: [] };
+  // Stable ordering: detected family first, others in OS_FAMILIES order.
+  $: orderedFamilies = (() => {
+    const primaryKey = detected?.family;
+    const rest = OS_FAMILIES.filter(f => f.family !== primaryKey);
+    const primary = OS_FAMILIES.find(f => f.family === primaryKey);
+    return primary ? [primary, ...rest] : OS_FAMILIES;
+  })();
 
   onMount(async () => {
     isLoggedIn = await isAuthenticated();
     loading = false;
     detected = await detectOS();
     release = await fetchLatestDownloads(getStreamFromURL());
-
-    document.addEventListener('click', handleClickOutside);
-    return () => {
-      document.removeEventListener('click', handleClickOutside);
-    };
   });
 
   function handleSignIn() {
     window.location.href = getGitHubAuthURL();
-  }
-
-  function getArtifactUrl(platform) {
-    const artifact = getDownloadForPlatform(release, platform);
-    return artifact?.download_url || null;
   }
 </script>
 
@@ -108,65 +79,18 @@
               Downloads coming soon
             </button>
             <p class="download-alt text-secondary mt-4">No release is available yet — check back shortly.</p>
-          {:else if detected && primaryDownload}
-            <!-- OS detected and artifact available -->
-            <div class="flex gap-2 items-center" style="flex-wrap: wrap;">
-              <a href={primaryDownload.download_url} class="btn btn-primary btn-large download-btn">
-                <svg viewBox="0 0 16 16" width="20" height="20" fill="currentColor">
-                  <path d="M2.75 14A1.75 1.75 0 0 1 1 12.25v-2.5a.75.75 0 0 1 1.5 0v2.5c0 .138.112.25.25.25h10.5a.25.25 0 0 0 .25-.25v-2.5a.75.75 0 0 1 1.5 0v2.5A1.75 1.75 0 0 1 13.25 14Z"/>
-                  <path d="M7.25 7.689V2a.75.75 0 0 1 1.5 0v5.689l1.97-1.969a.749.749 0 1 1 1.06 1.06l-3.25 3.25a.749.749 0 0 1-1.06 0L4.22 6.78a.749.749 0 1 1 1.06-1.06l1.97 1.969Z"/>
-                </svg>
-                Download for {detected.label || detected.os}
-              </a>
-              {#if detected.family === 'mac' && macPeer}
-                <a href={macPeer.download_url} class="btn btn-large download-btn">
-                  <svg viewBox="0 0 16 16" width="20" height="20" fill="currentColor">
-                    <path d="M2.75 14A1.75 1.75 0 0 1 1 12.25v-2.5a.75.75 0 0 1 1.5 0v2.5c0 .138.112.25.25.25h10.5a.25.25 0 0 0 .25-.25v-2.5a.75.75 0 0 1 1.5 0v2.5A1.75 1.75 0 0 1 13.25 14Z"/>
-                    <path d="M7.25 7.689V2a.75.75 0 0 1 1.5 0v5.689l1.97-1.969a.749.749 0 1 1 1.06 1.06l-3.25 3.25a.749.749 0 0 1-1.06 0L4.22 6.78a.749.749 0 1 1 1.06-1.06l1.97 1.969Z"/>
-                  </svg>
-                  {macPeerLabel}
-                </a>
-              {/if}
-            </div>
-            <p class="download-alt text-secondary mt-4">
-              {release.version}{#if altPlatforms.length > 0} · or download for
-                {#each altPlatforms as alt}
-                  {@const url = getArtifactUrl(alt.platform)}
-                  {#if url}
-                    <a href={url}>{alt.label}</a>{' '}
-                  {/if}
-                {/each}
-              {/if}
-            </p>
           {:else}
-            <!-- OS not detected or no artifact for this OS — show dropdown -->
-            <div class="download-dropdown" bind:this={dropdownButton}>
-              <button class="btn btn-primary btn-large download-btn" on:click={toggleDropdown}>
-                <svg viewBox="0 0 16 16" width="20" height="20" fill="currentColor">
-                  <path d="M2.75 14A1.75 1.75 0 0 1 1 12.25v-2.5a.75.75 0 0 1 1.5 0v2.5c0 .138.112.25.25.25h10.5a.25.25 0 0 0 .25-.25v-2.5a.75.75 0 0 1 1.5 0v2.5A1.75 1.75 0 0 1 13.25 14Z"/>
-                  <path d="M7.25 7.689V2a.75.75 0 0 1 1.5 0v5.689l1.97-1.969a.749.749 0 1 1 1.06 1.06l-3.25 3.25a.749.749 0 0 1-1.06 0L4.22 6.78a.749.749 0 1 1 1.06-1.06l1.97 1.969Z"/>
-                </svg>
-                Download Octopunk
-                <svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor" class="chevron" class:open={dropdownOpen}>
-                  <path d="M12.78 5.22a.749.749 0 0 1 0 1.06l-4.25 4.25a.749.749 0 0 1-1.06 0L3.22 6.28a.749.749 0 1 1 1.06-1.06L8 8.939l3.72-3.719a.749.749 0 0 1 1.06 0Z"/>
-                </svg>
-              </button>
-              {#if dropdownOpen}
-                <div class="dropdown-menu">
-                  {#each ALL_PLATFORMS as plat}
-                    {@const url = getArtifactUrl(plat.platform)}
-                    {#if url}
-                      <a href={url} class="dropdown-item" on:click={closeDropdown}>
-                        {plat.label}
-                      </a>
-                    {/if}
-                  {/each}
-                </div>
-              {/if}
+            <div class="download-stack">
+              {#each orderedFamilies as fam, i (fam.family)}
+                <DownloadButton
+                  label={fam.label}
+                  artifacts={grouped[fam.family]}
+                  primary={i === 0}
+                  preferredPlatform={detected?.family === fam.family ? detected.platform : ''}
+                />
+              {/each}
             </div>
-            {#if release}
-              <p class="download-alt text-secondary mt-4">{release.version}</p>
-            {/if}
+            <p class="download-alt text-secondary mt-4">{release.version}</p>
           {/if}
         </div>
       </section>
@@ -269,6 +193,13 @@
     gap: 8px;
   }
 
+  .download-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
   .download-alt {
     font-size: 14px;
   }
@@ -282,53 +213,6 @@
   .download-alt a:hover {
     color: var(--color-text-primary);
     text-decoration: underline;
-  }
-
-  .download-dropdown {
-    position: relative;
-    display: inline-block;
-  }
-
-  .download-btn .chevron {
-    margin-left: 4px;
-    transition: transform 0.2s ease;
-  }
-
-  .download-btn .chevron.open {
-    transform: rotate(180deg);
-  }
-
-  .dropdown-menu {
-    position: absolute;
-    top: calc(100% + 8px);
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--color-bg-secondary);
-    border: 1px solid var(--color-border-primary);
-    border-radius: 8px;
-    padding: 8px 0;
-    min-width: 180px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-    z-index: 100;
-  }
-
-  .dropdown-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 16px;
-    color: var(--color-text-primary);
-    text-decoration: none;
-    transition: background-color 0.15s ease;
-  }
-
-  .dropdown-item:hover {
-    background: var(--color-bg-tertiary);
-  }
-
-  .dropdown-item-ext {
-    color: var(--color-text-secondary);
-    font-size: 12px;
   }
 
   .header-nav {
