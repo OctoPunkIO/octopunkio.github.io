@@ -13,73 +13,79 @@ Octopunk is available for macOS, Windows, and Linux:
 
 Visit the [Homepage](/) page to download the latest version.
 
-See below for additional installation methods.
+## Installation
 
-## Additional installation options
+### MacOS
 
-### macOS
+Open the downloaded `.dmg` file and follow the familiar installation process of
+dragging the OctoPunk application to the Applications folder.
 
-#### Brew
+## Linux
 
-TODO: add brew install instructions
+OctoPunk is packaged as a Linux flatpak application.
 
-#### App store
+After downloading the flatpak file you may install it as a user application.
+```
+flatpak install --user OctoPunk-*.flatpak
+```
 
-TODO: add app store install instructions
+After installation the application will be available in the launcher on most
+popular distros. You can also launch it from the terminal with:
+```
+flatpak run io.github.octopunk
+```
 
+## Windows
 
-### Windows
+OctoPunk is packaged as an NSIS installer for Windows.
 
-1. Run the downloaded installer
-2. Follow the installation wizard
-3. Launch Octopunk from the Start menu
+After downloading the installer, run it and follow the installation process.
 
-### Linux
+OctoPunk will be available in the start menu after installation.
 
-TODO: add flathub installation info
+# Authentication
 
-## Authentication
+When OctoPunk is launched for the first time a welcome screen will greet you.
 
-When Octopunk is launched for the first time you are presented with a welcome
-screen.
+This welcome screen prompts you to authenticate with GitHub.
 
-<video src="/screens/octopunk-authenticate.mp4" controls width="100%"></video>
+<img src="/screens/octopunk-authentication-greeter.png"></img>
 
-This screen will ask you to authenticate to GitHub.
+You can authenticate with a API token or via the OAuth flow.
 
-You have two options for authentication, OAuth based and PAT based. PAT is
-recommended.
+## API Token
 
-### PAT authentication
+This is OctoPunk's preferred authentication method.
 
-A PAT is a personal access token.
+When using an API token OctoPunk is acting on behalf of your user. This is the
+same authentication mode as the `gh` CLI tool.
 
-PATs can be created by going to the following settings page:
-https://github.com/settings/tokens
+Because OctoPunk is a full-fledged GitHub platform client, a token which grants
+full access to GitHub resources is suggested. However, you are free to create
+a scoped down token for usage in OctoPunk as well. Just be aware that some
+parts of OctoPunk may fail to work if the token does not have the necessary
+permissions.
 
-Either a classic or fine-grained token can be used. Octopunk is a full GitHub
-client which aims to support all GitHub features. Therefore, Octopunk expects
-a token with all scopes enabled.
+OctoPunk works with both classic and fine-grained tokens.
 
-However, if there are privileges you do not want to grant to Octopunk, leaving
-them out of the PAT scope is suggested. Some of Octopunk's functionality may
-not work however.
+See https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens
+for in-depth documentation on creating and managing API tokens.
 
-PAT is the preferred authentication method. PAT is the authentication method the
-`GH` CLI uses as well. A PAT is a token that directly identifies your user to
-GitHub.
+## OAuth
 
-### OAuth
+OctoPunk supports OAuth authentication. However, due to OctoPunk being a full-fledged
+GitHub platform client, this authentication method can be less convenient.
 
-Some users are more comfortable with using the OAuth flow. This typically stems
-from not needing to generate any type of token and manage it.
+When authenticating via OAuth OctoPunk is presenting itself as an GitHub application
+to the GitHub platform. This is a different security model then token based authentication.
 
-Octopunk supports OAuth, however, GitHub's implementation of OAuth requires
-each repository to allow an OAuth application access.
+When using OAauth, resourced you access such as repositories will need to grant
+permissions to the OctoPunk application. And this will have to be done on a
+per-organization or per-resource level.
 
-Therefore, if you plan on using OAuth authentication, all GitHub resources you
-plan to access must allow the Octopunk application access. This access can
-only be granted from the GitHub web app.
+The advantage to this model is not having to manage any tokens,
+but the disadvantage is that you will have to grant permissions to OctoPunk for
+any resource you want to access.
 
-This is less ideal from the perspective of a GitHub client, as a client's model
-is more aligned to acting as the user, not as a 3rd party application.
+This model may work for you or your organization, if you want to scope
+OctoPunk's access to only a few resources.

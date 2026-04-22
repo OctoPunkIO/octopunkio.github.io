@@ -1,66 +1,93 @@
 ---
 title: Dashboard
-order: 1
+order: 3
 ---
 
 # Dashboard
 
-Octopunk's dashboard provides a customizable view of the GitHub activity you
-are most interested in.
+The dashboard is an customizable always-present heads up display of your
+GitHub activity.
 
-<video src="/screens/octopunk-dashboard.mp4" controls width="100%" loop muted></video>
+The following video clip gets you acquainted with the dashboard and its features.
 
+<video src="/screens/dashboard.processed.mp4" controls autoplay muted loop playsinline></video>
 
-## Widgets
+# Dashboard widgets
 
-The dashboard is composed of search, activity graph, and feed widgets.
+The dashboard can be configured with several types of widgets.
 
-Search widgets take filter strings and maintain an up-to-date view of activity
-tailored to your needs.
+All dashboard widgets can be dragged into either a 2x2 or a 1x2 layout and
+can also be renamed.
 
-The activity graph summarizes your activity over a customizable time range.
+## Search widget
 
-Finally, the feed widget shows a stream of content interesting to you. This
-typically tracks activity surrounding starred, owned, and watched GitHub
-resources.
+A search widget is supplied a query against the GitHub search API and, by
+default, places the most recently updated result at the top.
 
+This becomes a powerful way to stay informed about the streams of activity you
+are interested in. By creating your own set of search widgets you create a
+heads up display of the latest activity that needs your attention.
 
-## Card deck
+The search widgets support all search queries available to the [GitHub search API](https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/filtering-and-searching-issues-and-pull-requests#using-search-to-filter-issues-and-pull-requests).
 
-The left-hand drawer on the dashboard is called the card deck and is composed
-of several cards.
+## Your feed widget
 
-Several cards exist and are shown by default, their order and whether they are
-visible can be changed by clicking the settings gear on the top card.
+The feed widget displays your user's activity feed. These are the events
+that are particularily interesting to you, often driven by who you follow, who
+follows you, who has starred your repo, and what repos you have starred.
 
-### Inbox
+This can be thought of as your "social media" feed.
 
-The inbox card lists notifications.
+## Activity graph
 
-Octopunk ships with a custom notification system described in full in the
-[notifications](/docs/features/notifications).
+The activity graph summarizes your activity on GitHub over a custom range
+of time.
 
-### Recently viewed
+# The carddeck
 
-The recently viewed card tracks your most recently visited resources.
+The carddeck is the left set of lists in the dashboard. Each list is called
+a card.
 
-This list can be filtered by the filter icon in the card's header.
+Each card supplies a list of items which help you keep up to date on GitHub
+platform activity.
 
-### Activity feed
+## Notification inbox
 
-This card shows the latest GitHub events relevant for the user.
+Octopunk makes large improvements to GitHub notifications and this is covered
+in it's own dedicated section.
 
-It can be used to keep abreast of recent activity on resources you have expressed
-interest in.
+The notificatoin inbox card shows a subset of GitHub notifications you have
+expressed interest in. Octopunk allows the filtering-down of notifications.
+These filtered-down notifications are delivered to your inbox if desired.
 
-The activity feed can be filtered using the filter button in the header.
+## Recently viewed
 
-Additionally, you can subscribe to particular events using the subscribe button
-in the header. When you subscribe to particular events desktop notifications
-will be fired when they occur.
+The recently viewed card simply maintains pages you have recently viewed. This
+is helpful when jumping between several issues. If you find yourself forgetting
+the last few issues you looked at they will be there in the recently viewed
+card.
 
-### Dashboard outline
+This card supports filtering to quickly search for a particular type of
+recently viewed item, such as a User, for example.
 
-The dashboard outline inventories all widgets on your dashboard. 
+## Activity feed
 
-Clicking on an outline entry scrolls to and focuses the selected widget.
+The activity feed card is a list of events targeted to you due to you being a member
+of an organization or a subscriber of a particular GitHub entity.
+
+The activity feed supports filtering to quickly view a subset of event types.
+
+The activity feed also supports desktop notifications on a per-event basis.
+This can be useful if you'd like to be notified when a particular event occurs.
+
+## Dashboard outline
+
+The dashboard outline card allows you to jump to a particular widget in the
+dashboard and create new dashboard widgets.
+
+## Hiding and reordering cards
+
+The top-most card in the card deck will always contain a settings gear icon.
+
+This opens a pop-up menu where each card can be dragged to a new position and
+hidden.
