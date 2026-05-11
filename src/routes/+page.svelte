@@ -9,6 +9,7 @@
   let loading = true;
   let detected = null;
   let release = null;
+  let currentStream = 'stable';
 
   $: grouped = release ? groupArtifactsByFamily(release) : { mac: [], linux: [], windows: [] };
   // Stable ordering: detected family first, others in OS_FAMILIES order.
@@ -23,7 +24,8 @@
     isLoggedIn = await isAuthenticated();
     loading = false;
     detected = await detectOS();
-    release = await fetchLatestDownloads(getStreamFromURL());
+    currentStream = getStreamFromURL();
+    release = await fetchLatestDownloads(currentStream);
   });
 
   function handleSignIn() {
@@ -59,6 +61,11 @@
               Downloads coming soon
             </button>
             <p class="download-alt text-secondary mt-4">No release is available yet — check back shortly.</p>
+            {#if currentStream !== 'beta'}
+              <p class="download-alt text-secondary mt-2">
+                <a href="?stream=beta" data-sveltekit-reload>Looking for the beta?</a>
+              </p>
+            {/if}
           {:else}
             <div class="download-triangle">
               <DownloadButton
