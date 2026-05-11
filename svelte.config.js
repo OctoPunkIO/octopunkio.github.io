@@ -15,7 +15,12 @@ const config = {
 			assets: 'build',
 			fallback: '404.html',
 			precompress: false
-		})
+		}),
+		prerender: {
+			// /blog/[slug] returns no entries when blog/ is empty. Don't fail the
+			// build over that — the empty state is intentional.
+			handleUnseenRoutes: 'ignore'
+		}
 	}
 };
 

@@ -39,6 +39,7 @@
   // Downloads
   let detected = null;
   let release = null;
+  let loadingRelease = false;
   let selectedStream = 'stable';
 
   // Helper to check if an action is allowed
@@ -49,7 +50,12 @@
 
   async function loadRelease(stream) {
     release = null;
-    release = await fetchLatestDownloads(stream);
+    loadingRelease = true;
+    try {
+      release = await fetchLatestDownloads(stream);
+    } finally {
+      loadingRelease = false;
+    }
   }
 
   function onStreamChange() {
@@ -678,12 +684,23 @@
               <option value="stable">Stable</option>
               <option value="beta">Beta</option>
             </select>
-            {#if release?.version}
-              <span class="text-secondary">{release.version}</span>
+          </div>
+
+          <div class="version-card mt-4">
+            {#if loadingRelease}
+              <span class="version-spinner" aria-hidden="true"></span>
+              <span class="version-loading-text">Loading {selectedStream} release info…</span>
+            {:else if release}
+              <span class="version-label">Latest {selectedStream}:</span>
+              <span class="version-number">{release.version}</span>
+            {:else}
+              <!-- Source repo is private; don't fall back to github.com/.../releases. -->
+              <span class="version-empty">No {selectedStream} release available yet</span>
             {/if}
           </div>
-          <div class="download-buttons mt-4">
-            {#if release}
+
+          {#if release}
+            <div class="download-buttons mt-4">
               {#if detected}
                 {@const primary = getDownloadForPlatform(release, detected.platform)}
                 {#if primary}
@@ -698,11 +715,8 @@
                   {/if}
                 {/if}
               {/each}
-            {:else}
-              <!-- Source repo is private; don't fall back to github.com/.../releases. -->
-              <button class="btn btn-primary" disabled>No {selectedStream} release available yet</button>
-            {/if}
-          </div>
+            </div>
+          {/if}
         </div>
       {/if}
     </div>
@@ -938,21 +952,66 @@
   .stream-select {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 12px;
     font-size: 14px;
   }
 
   .stream-select label {
     color: var(--color-text-secondary, inherit);
+    white-space: nowrap;
   }
 
   .stream-select select {
-    padding: 4px 8px;
-    border: 1px solid var(--color-border, #d0d7de);
+    padding: 6px 10px;
+    border: 1px solid var(--color-border-primary, #d0d7de);
     border-radius: 6px;
-    background: var(--color-surface, #fff);
-    color: var(--color-text, inherit);
+    background: var(--color-component-bg, #fff);
+    color: var(--color-text-primary, inherit);
     font-size: 14px;
+    width: auto;
+    min-width: 160px;
+    flex: 0 0 auto;
+  }
+
+  .version-card {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    background-color: var(--color-component-bg);
+    border: 1px solid var(--color-border-primary);
+    border-radius: 6px;
+    font-size: 14px;
+    min-height: 40px;
+  }
+
+  .version-label {
+    color: var(--color-text-secondary);
+  }
+
+  .version-number {
+    color: var(--color-text-primary);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .version-loading-text,
+  .version-empty {
+    color: var(--color-text-secondary);
+  }
+
+  .version-spinner {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid var(--color-border-primary);
+    border-top-color: var(--color-text-secondary);
+    border-radius: 50%;
+    animation: version-spin 0.8s linear infinite;
+  }
+
+  @keyframes version-spin {
+    to { transform: rotate(360deg); }
   }
 
   .alert {

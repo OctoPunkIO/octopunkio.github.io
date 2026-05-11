@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
   import { getPricing } from '$lib/api.js';
   import { detectOS, ALL_PLATFORMS, fetchLatestDownloads, getDownloadForPlatform, getStreamFromURL } from '$lib/downloads.js';
+  import Header from '$lib/components/Header.svelte';
 
   let detected = null;
   let release = null;
@@ -93,18 +94,7 @@
 </script>
 
 <div class="page">
-  <header class="page-header">
-    <div class="container flex justify-between items-center">
-      <a href="/" class="logo">
-        <img src="/octopunk-icon.png" alt="Octopunk" class="logo-icon" />
-        <h1>Octopunk</h1>
-      </a>
-      <nav class="header-nav">
-        <a href="/" class="nav-link">Home</a>
-        <a href="/docs" class="nav-link">Docs</a>
-      </nav>
-    </div>
-  </header>
+  <Header />
 
   <main class="page-content">
     <div class="container">
@@ -262,70 +252,6 @@
 </div>
 
 <style>
-  .logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
-  }
-
-  .logo-icon {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    padding: 2px;
-    background: linear-gradient(
-      90deg,
-      #a855f7,
-      #ec4899,
-      #f97316,
-      #eab308,
-      #a855f7
-    );
-    background-size: 300% 100%;
-    animation: gradient-flow 8s ease infinite;
-    filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.6))
-            drop-shadow(0 0 16px rgba(236, 72, 153, 0.4));
-  }
-
-  .logo h1 {
-    font-family: 'Audiowide', sans-serif;
-    font-size: 20px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    background: linear-gradient(
-      90deg,
-      #a855f7,
-      #ec4899,
-      #f97316,
-      #eab308,
-      #a855f7
-    );
-    background-size: 300% 100%;
-    animation: gradient-flow 8s ease infinite;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .header-nav {
-    display: flex;
-    align-items: center;
-    gap: 24px;
-  }
-
-  .nav-link {
-    color: var(--color-text-secondary);
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 500;
-    transition: color 0.15s ease;
-  }
-
-  .nav-link:hover {
-    color: var(--color-text-primary);
-  }
-
   .pricing-hero h2 {
     font-size: 48px;
     font-weight: 700;
@@ -554,21 +480,22 @@
     border-top: 1px solid var(--color-border-primary);
   }
 
-  @keyframes gradient-flow {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  }
-
   @media (max-width: 768px) {
     .pricing-grid {
       grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .pricing-hero h2 {
+      font-size: 32px;
+      letter-spacing: -0.5px;
+    }
+    .pricing-hero p {
+      font-size: 16px;
+    }
+    .price {
+      font-size: 36px;
     }
   }
 </style>

@@ -3,6 +3,7 @@
   import { isAuthenticated, getGitHubAuthURL } from '$lib/api.js';
   import { detectOS, fetchLatestDownloads, getStreamFromURL, groupArtifactsByFamily, OS_FAMILIES } from '$lib/downloads.js';
   import DownloadButton from '$lib/components/DownloadButton.svelte';
+  import Header from '$lib/components/Header.svelte';
 
   let isLoggedIn = false;
   let loading = true;
@@ -31,28 +32,7 @@
 </script>
 
 <div class="page">
-  <header class="page-header">
-    <div class="container flex justify-between items-center">
-      <div class="logo">
-        <img src="/octopunk-icon.png" alt="Octopunk" class="logo-icon" />
-        <h1>Octopunk</h1>
-      </div>
-      <nav class="header-nav">
-        <a href="/docs" class="nav-link">Docs and features</a>
-        <a href="/pricing" class="nav-link">Pricing</a>
-        {#if isLoggedIn}
-          <a href="/dashboard" class="btn btn-primary">Dashboard</a>
-        {:else}
-          <button class="btn btn-primary" on:click={handleSignIn}>
-            <svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor">
-              <path d="M2 2.75C2 1.784 2.784 1 3.75 1h2.5a.75.75 0 0 1 0 1.5h-2.5a.25.25 0 0 0-.25.25v10.5c0 .138.112.25.25.25h2.5a.75.75 0 0 1 0 1.5h-2.5A1.75 1.75 0 0 1 2 13.25Zm6.56 4.5h5.69a.75.75 0 0 1 0 1.5H8.56l1.97 1.97a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215L6.22 8.53a.75.75 0 0 1 0-1.06l3.25-3.25a.749.749 0 0 1 1.275.326.749.749 0 0 1-.215.734Z"/>
-            </svg>
-            Login with GitHub
-          </button>
-        {/if}
-      </nav>
-    </div>
-  </header>
+  <Header />
 
   <main class="page-content">
     <div class="container">
@@ -143,55 +123,20 @@
 </div>
 
 <style>
-  .logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .logo-icon {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    padding: 2px;
-    background: linear-gradient(
-      90deg,
-      #a855f7,
-      #ec4899,
-      #f97316,
-      #eab308,
-      #a855f7
-    );
-    background-size: 300% 100%;
-    animation: gradient-flow 8s ease infinite;
-    filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.6))
-            drop-shadow(0 0 16px rgba(236, 72, 153, 0.4));
-  }
-
-  .logo h1 {
-    font-family: 'Audiowide', sans-serif;
-    font-size: 20px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    background: linear-gradient(
-      90deg,
-      #a855f7,
-      #ec4899,
-      #f97316,
-      #eab308,
-      #a855f7
-    );
-    background-size: 300% 100%;
-    animation: gradient-flow 8s ease infinite;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
   .hero h2 {
     font-size: 48px;
     font-weight: 700;
     letter-spacing: -1px;
+  }
+
+  @media (max-width: 600px) {
+    .hero h2 {
+      font-size: 32px;
+      letter-spacing: -0.5px;
+    }
+    .hero p {
+      font-size: 16px;
+    }
   }
 
   .download-btn {
@@ -227,31 +172,6 @@
   .download-alt a:hover {
     color: var(--color-text-primary);
     text-decoration: underline;
-  }
-
-  .header-nav {
-    display: flex;
-    align-items: center;
-    gap: 24px;
-  }
-
-  .nav-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    color: var(--color-text-secondary);
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 500;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    transition: color 0.15s ease;
-  }
-
-  .nav-link:hover {
-    color: var(--color-text-primary);
   }
 
   .hero p {
@@ -346,15 +266,4 @@
     vertical-align: top;
   }
 
-  @keyframes gradient-flow {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  }
 </style>

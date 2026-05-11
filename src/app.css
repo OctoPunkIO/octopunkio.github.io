@@ -296,3 +296,12 @@ input::placeholder {
 .gap-2 { gap: 8px; }
 .gap-4 { gap: 16px; }
 .gap-6 { gap: 24px; }
+
+/* Shared brand gradient animation. Used by the logo (Header.svelte) and
+   the home page screenshot frame; kept global so component-scoped @keyframes
+   don't have to be redeclared per file. */
+@keyframes gradient-flow {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
