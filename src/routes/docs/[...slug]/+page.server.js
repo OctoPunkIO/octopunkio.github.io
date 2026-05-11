@@ -35,6 +35,7 @@ async function getDocsTree(dir, basePath = '') {
 				slug: relativePath.replace(/\\/g, '/'),
 				title: indexMeta?.title || formatTitle(entry.name),
 				order: indexMeta?.order ?? 999,
+				hasIndex: indexMeta !== null,
 				children
 			});
 		} else if (entry.name.endsWith('.md') && entry.name !== 'index.md') {

@@ -99,9 +99,15 @@
 			{#each data.tree as item}
 				{#if item.type === 'directory'}
 					<div class="nav-section">
-						<a href="/docs/{item.slug}" class="nav-section-title" class:active={data.slug === item.slug || data.slug === item.slug + '/index'}>
-							{item.title}
-						</a>
+						{#if item.hasIndex}
+							<a href="/docs/{item.slug}" class="nav-section-title" class:active={data.slug === item.slug || data.slug === item.slug + '/index'}>
+								{item.title}
+							</a>
+						{:else}
+							<div class="nav-section-title nav-section-title-static">
+								{item.title}
+							</div>
+						{/if}
 						{#if item.children.length > 0}
 							<div class="nav-section-children">
 								{#each item.children as child}
@@ -250,6 +256,14 @@
 	.nav-section-title.active {
 		background: rgba(168, 85, 247, 0.15);
 		color: #a855f7;
+	}
+
+	.nav-section-title-static {
+		cursor: default;
+	}
+
+	.nav-section-title-static:hover {
+		background: transparent;
 	}
 
 	.nav-section-children {
