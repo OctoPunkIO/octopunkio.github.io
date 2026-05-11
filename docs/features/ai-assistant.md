@@ -8,9 +8,9 @@ order: 6
 OctoPunk has an embedded AI assistant that will readily help explain issues,
 pull requests, review code, open issues, and more.
 
-The AI assistant can be opened with <META+Shift+A>
+The AI assistant can be opened with :command[open-ai-panel].
 
-By holding <ALT> and clicking on an object you will make the AI aware of what
+By holding :key[ALT] and clicking on an object you will make the AI aware of what
 you are focusing on. From there you are able to ask it specific questions.
 
 When there is no selection the AI assistant will evaluate the entire page as
@@ -28,8 +28,8 @@ The currently supported set of AI backends are
 - Google Gemini
 - OpenAI
 
-You must supply an API key in the settings menu before the AI assistant can
-respond to a prompt.
+You must supply an API key from :command[global-settings] before the AI
+assistant can respond to a prompt.
 
 Once the API key is applied and validated a model can be selected.
 

@@ -6,8 +6,7 @@ order: 4
 # Omnibar
 
 The Omnibar helps you quickly search across the GitHub platform along with
-your recently visited items and open tabs. The Omnibar can be opened by
-pressing <Meta+O>.
+your recently visited items and open tabs. Open it with :command[open-omnibar].
 
 Watch the following video to get acquainted with the Omnibar.
 

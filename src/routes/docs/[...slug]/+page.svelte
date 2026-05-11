@@ -1,5 +1,6 @@
 <script>
 	import { marked } from 'marked';
+	import { docDirectives } from '$lib/docs/markedDirectives.js';
 
 	export let data;
 
@@ -32,7 +33,7 @@
 
 	function parseMarkdown(markdown) {
 		const { renderer, tocEntries } = createRenderer();
-		marked.use({ renderer });
+		marked.use({ renderer, extensions: docDirectives });
 		const html = marked.parse(markdown);
 		toc = tocEntries;
 		return html;
@@ -376,6 +377,78 @@
 		padding: 2px 6px;
 		border-radius: 4px;
 		font-size: 14px;
+	}
+
+	/* Inline command palette card — mirrors a desktop palette entry row. */
+	.prose :global(.cmd-card) {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		padding: 3px 6px 3px 8px;
+		background: var(--color-bg-secondary);
+		border: 1px solid var(--color-border-primary);
+		border-radius: 6px;
+		font-size: 14px;
+		line-height: 1.2;
+		color: var(--color-text-primary);
+		vertical-align: baseline;
+		transition: background-color 0.15s ease, border-color 0.15s ease;
+	}
+
+	.prose :global(.cmd-card:hover) {
+		background: var(--color-bg-tertiary);
+		border-color: #a855f7;
+	}
+
+	.prose :global(.cmd-card-icon) {
+		display: inline-flex;
+		align-items: center;
+		color: #ffffff;
+	}
+
+	.prose :global(.cmd-card-icon svg) {
+		display: block;
+		fill: currentColor;
+	}
+
+	.prose :global(.cmd-card-label) {
+		font-weight: 500;
+	}
+
+	.prose :global(.cmd-card-badge) {
+		display: inline-flex;
+		align-items: center;
+		padding: 1px 5px;
+		margin-left: 2px;
+		background: var(--color-bg-tertiary);
+		border: 1px solid var(--color-border-primary);
+		border-radius: 4px;
+		font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+		font-size: 11px;
+		color: var(--color-text-secondary);
+		letter-spacing: 0.02em;
+	}
+
+	.prose :global(.cmd-card-unknown) {
+		background: rgba(248, 81, 73, 0.15);
+		border-color: #f85149;
+		color: #f85149;
+		font-family: ui-monospace, SFMono-Regular, monospace;
+	}
+
+	/* Raw key chip — for modifier-hold mentions, NOT command palette entries. */
+	.prose :global(.key-chip) {
+		display: inline-block;
+		padding: 2px 6px;
+		background: var(--color-bg-tertiary);
+		border: 1px solid var(--color-border-primary);
+		border-radius: 4px;
+		font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+		font-size: 12px;
+		font-weight: 500;
+		color: var(--color-text-secondary);
+		line-height: 1.4;
+		vertical-align: baseline;
 	}
 
 	.prose :global(pre) {
