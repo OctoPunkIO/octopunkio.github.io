@@ -38,6 +38,23 @@
 
   <main class="page-content">
     <div class="container">
+      {#if currentStream === 'beta'}
+        <div class="beta-banner">
+          <div class="beta-banner-icon" aria-hidden="true">
+            <svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor">
+              <path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/>
+            </svg>
+          </div>
+          <div class="beta-banner-body">
+            <strong>You're on the beta channel.</strong>
+            Beta builds can be unstable, and we may reset the app data directory
+            between releases (clears your settings and sign-in). Use
+            <a href="?stream=stable" data-sveltekit-reload>the stable channel</a>
+            if you'd rather avoid that.
+          </div>
+        </div>
+      {/if}
+
       <section class="hero text-center">
         <h2>Navigate GitHub Like You Navigate Code</h2>
         <p class="text-secondary mt-4">
@@ -134,6 +151,41 @@
     font-size: 48px;
     font-weight: 700;
     letter-spacing: -1px;
+  }
+
+  .beta-banner {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin: 24px 0 0;
+    padding: 14px 18px;
+    border-radius: 10px;
+    border: 1px solid rgba(234, 179, 8, 0.35);
+    background: rgba(234, 179, 8, 0.08);
+    color: var(--color-text-primary);
+    font-size: 14px;
+    line-height: 1.55;
+    text-align: left;
+  }
+
+  .beta-banner-icon {
+    flex-shrink: 0;
+    color: #eab308;
+    margin-top: 2px;
+  }
+
+  .beta-banner-body strong {
+    margin-right: 6px;
+  }
+
+  .beta-banner-body a {
+    color: var(--color-text-link);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .beta-banner-body a:hover {
+    color: var(--color-text-link-hover);
   }
 
   @media (max-width: 600px) {

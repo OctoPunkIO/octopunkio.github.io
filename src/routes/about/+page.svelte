@@ -43,8 +43,10 @@
         </p>
 
         <p>
-          Along the way we've fixed a few of GitHub's longest-running annoyances. Like opening
-          pull requests with thousands of files without watching the page choke.
+          Along the way we've fixed a few of GitHub's longest-running annoyances. The
+          notification inbox doesn't drown you in noise. Pull requests with thousands of
+          files load instead of choking. The dashboard surfaces what actually needs your
+          attention.
         </p>
 
         <p>

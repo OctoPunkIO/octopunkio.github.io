@@ -699,6 +699,22 @@
             {/if}
           </div>
 
+          {#if selectedStream === 'beta'}
+            <div class="beta-warning mt-4">
+              <div class="beta-warning-icon" aria-hidden="true">
+                <svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor">
+                  <path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/>
+                </svg>
+              </div>
+              <div class="beta-warning-body">
+                <strong>Heads up.</strong>
+                Beta builds can be unstable, and we may reset the app data
+                directory between releases (clears your settings and sign-in).
+                Switch back to <strong>Stable</strong> above if you'd rather avoid that.
+              </div>
+            </div>
+          {/if}
+
           {#if release}
             <div class="download-buttons mt-4">
               {#if detected}
@@ -1012,6 +1028,29 @@
 
   @keyframes version-spin {
     to { transform: rotate(360deg); }
+  }
+
+  .beta-warning {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 1px solid rgba(234, 179, 8, 0.35);
+    background: rgba(234, 179, 8, 0.08);
+    color: var(--color-text-primary);
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  .beta-warning-icon {
+    flex-shrink: 0;
+    color: #eab308;
+    margin-top: 2px;
+  }
+
+  .beta-warning-body strong {
+    margin-right: 4px;
   }
 
   .alert {
