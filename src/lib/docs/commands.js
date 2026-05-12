@@ -24,5 +24,10 @@ export const commands = {
     label: 'Settings',
     description: 'Open application settings',
     icon: 'gear'
+  },
+  'global-notifications': {
+    label: 'Show Notifications',
+    description: 'Open the notifications page',
+    icon: 'bell'
   }
 };

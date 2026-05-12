@@ -24,10 +24,11 @@ The following video clip gets you acquainted with the notification system.
 
 ## Usage
 
+Open the notifications page with :command[global-notifications].
+
 Octopunk organizes notifications by filters.
 
-A filter is created by opening the notification page and clicking the plus button on the
-notifications primary tab.
+A filter is created by clicking the plus button on the notifications primary tab.
 
 <img src="/screens/notifications-filter-create.png"></img>
 

@@ -19,7 +19,7 @@ The following video clip gets you acquainted with the code intelligence system.
 
 Octopunk will attempt to find language servers in the user's PATH.
 
-You can determine what LSP servers were detected by opening the settings page and navigating to the LSP section.
+You can determine what LSP servers were detected by opening :command[global-settings] and navigating to the LSP section.
 
 If your desired LSP is not detected you can supply a path directly to the binary.
 
