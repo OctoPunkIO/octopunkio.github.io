@@ -1,5 +1,6 @@
 <script>
   import Header from '$lib/components/Header.svelte';
+  import Seo from '$lib/components/Seo.svelte';
 
   export let data;
 
@@ -11,10 +12,10 @@
   }
 </script>
 
-<svelte:head>
-  <title>Blog - Octopunk</title>
-  <meta name="description" content="Notes, releases, and assorted thoughts from the Octopunk team." />
-</svelte:head>
+<Seo
+  title="Blog"
+  description="Notes, releases, and assorted thoughts from the Octopunk team on building a GitHub client for power users."
+/>
 
 <div class="page">
   <Header />
@@ -22,8 +23,14 @@
   <main class="page-content">
     <div class="container blog-container">
       <section class="blog-hero">
-        <h2>Blog</h2>
+        <h1>Blog</h1>
         <p class="lede">Notes, releases, and assorted thoughts.</p>
+        <a class="blog-feed-link" href="/atom.xml" aria-label="Atom feed">
+          <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" aria-hidden="true">
+            <path d="M2.002 2.725a.75.75 0 0 1 .797-.7C9.418 2.43 14.57 7.582 14.975 14.201a.75.75 0 1 1-1.497.092 11.252 11.252 0 0 0-10.58-10.58.75.75 0 0 1-.896-.988Zm.046 5.066A.75.75 0 0 1 2.84 7.04a8.252 8.252 0 0 1 8.117 8.117.75.75 0 0 1-1.498.09A6.752 6.752 0 0 0 2.94 8.789a.75.75 0 0 1-.892-.998ZM3.5 13.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Z"/>
+          </svg>
+          Subscribe via Atom
+        </a>
       </section>
 
       {#if data.posts.length === 0}
@@ -62,7 +69,7 @@
     padding-bottom: 64px;
   }
 
-  .blog-hero h2 {
+  .blog-hero h1 {
     font-size: 40px;
     font-weight: 700;
     letter-spacing: -0.02em;
@@ -73,6 +80,25 @@
     font-size: 18px;
     color: var(--color-text-secondary);
     line-height: 1.6;
+  }
+
+  .blog-feed-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 12px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: 1px solid var(--color-border-primary);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 13px;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .blog-feed-link:hover {
+    color: var(--color-text-primary);
+    border-color: var(--color-border-secondary);
   }
 
   .blog-list {
@@ -132,7 +158,7 @@
     .blog-container {
       padding-top: 32px;
     }
-    .blog-hero h2 {
+    .blog-hero h1 {
       font-size: 32px;
     }
   }

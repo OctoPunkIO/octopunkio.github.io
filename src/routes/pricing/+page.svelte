@@ -3,6 +3,8 @@
   import { getPricing } from '$lib/api.js';
   import { detectOS, ALL_PLATFORMS, fetchLatestDownloads, getDownloadForPlatform, getStreamFromURL } from '$lib/downloads.js';
   import Header from '$lib/components/Header.svelte';
+  import Footer from '$lib/components/Footer.svelte';
+  import Seo from '$lib/components/Seo.svelte';
 
   let detected = null;
   let release = null;
@@ -93,13 +95,18 @@
   });
 </script>
 
+<Seo
+  title="Pricing"
+  description="Octopunk is free for public repositories on Mac, Linux, and Windows. Subscribe to unlock private repositories — fixed monthly or annual pricing, no surprises."
+/>
+
 <div class="page">
   <Header />
 
   <main class="page-content">
     <div class="container">
       <section class="pricing-hero text-center">
-        <h2>Pricing</h2>
+        <h1>Pricing</h1>
         <p class="text-secondary mt-4">
           Fixed pricing, no surprises, as easy as it gets.
         </p>
@@ -244,15 +251,11 @@
     </div>
   </main>
 
-  <footer class="page-footer">
-    <div class="container text-center text-secondary">
-      <p>&copy; 2025 Octopunk. All rights reserved.</p>
-    </div>
-  </footer>
+  <Footer />
 </div>
 
 <style>
-  .pricing-hero h2 {
+  .pricing-hero h1 {
     font-size: 48px;
     font-weight: 700;
     letter-spacing: -1px;
@@ -475,11 +478,6 @@
     font-size: 12px;
   }
 
-  .page-footer {
-    padding: 24px 0;
-    border-top: 1px solid var(--color-border-primary);
-  }
-
   @media (max-width: 768px) {
     .pricing-grid {
       grid-template-columns: 1fr;
@@ -487,7 +485,7 @@
   }
 
   @media (max-width: 600px) {
-    .pricing-hero h2 {
+    .pricing-hero h1 {
       font-size: 32px;
       letter-spacing: -0.5px;
     }

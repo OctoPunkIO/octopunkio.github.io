@@ -15,6 +15,7 @@
   } from '$lib/api.js';
   import { detectOS, ALL_PLATFORMS, fetchLatestDownloads, getDownloadForPlatform, getStreamFromURL } from '$lib/downloads.js';
   import { pollingManager } from '$lib/utils/pollingManager.js';
+  import Seo from '$lib/components/Seo.svelte';
 
   let user = null;
   let subscription = null;
@@ -406,12 +407,14 @@
   $: licensed = (user, subscriptionState, isLicensed());
 </script>
 
+<Seo title="Dashboard" description="Manage your Octopunk subscription." noindex={true} />
+
 <div class="page">
   <header class="page-header">
     <div class="container flex justify-between items-center">
       <a href="/" class="logo">
         <img src="/octopunk-icon.png" alt="Octopunk" class="logo-icon" />
-        <h1>Octopunk</h1>
+        <span class="logo-wordmark">Octopunk</span>
       </a>
       <nav class="flex items-center gap-4">
         {#if user?.is_admin}
@@ -766,7 +769,7 @@
             drop-shadow(0 0 16px rgba(236, 72, 153, 0.4));
   }
 
-  .logo h1 {
+  .logo-wordmark {
     font-family: 'Audiowide', sans-serif;
     font-size: 20px;
     font-weight: 700;

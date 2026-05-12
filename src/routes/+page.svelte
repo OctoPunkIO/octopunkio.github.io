@@ -4,6 +4,9 @@
   import { detectOS, fetchLatestDownloads, getStreamFromURL, groupArtifactsByFamily, OS_FAMILIES } from '$lib/downloads.js';
   import DownloadButton from '$lib/components/DownloadButton.svelte';
   import Header from '$lib/components/Header.svelte';
+  import Footer from '$lib/components/Footer.svelte';
+  import Seo from '$lib/components/Seo.svelte';
+  import { SITE_URL, DEFAULT_DESCRIPTION } from '$lib/seo.js';
 
   let isLoggedIn = false;
   let loading = true;
@@ -33,6 +36,32 @@
   }
 </script>
 
+<Seo description={DEFAULT_DESCRIPTION} />
+
+<svelte:head>
+  {@html `<script type="application/ld+json">${JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'Octopunk',
+    description: DEFAULT_DESCRIPTION,
+    url: SITE_URL,
+    applicationCategory: 'DeveloperApplication',
+    operatingSystem: 'macOS, Linux, Windows',
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+      description: 'Free for public repositories; subscription unlocks private repositories.'
+    },
+    author: {
+      '@type': 'Organization',
+      name: 'Octopunk',
+      url: SITE_URL,
+      sameAs: ['https://www.linkedin.com/company/octopunk']
+    }
+  })}<\/script>`}
+</svelte:head>
+
 <div class="page">
   <Header />
 
@@ -56,7 +85,10 @@
       {/if}
 
       <section class="hero text-center">
-        <h2>Navigate GitHub Like You Navigate Code</h2>
+        <h1>Navigate GitHub Like You Navigate Code</h1>
+        <p class="hero-tagline text-secondary mt-4">
+          A GitHub Desktop alternative for Mac, Linux, and Windows — built for power users.
+        </p>
         <p class="text-secondary mt-4">
           Octopunk is a GitHub client built for the modern hacker. Fuzzy search across repos,
           create tailored dashboard views, LSP aware, and keyboard shortcuts everywhere — GitHub that finally works like your editor.
@@ -129,6 +161,8 @@
           <video
             src="/screens/octopunk-demo-reel.mp4"
             class="app-video"
+            poster="/app-screenshot.png"
+            preload="metadata"
             autoplay
             muted
             loop
@@ -139,18 +173,20 @@
     </div>
   </main>
 
-  <footer class="page-footer">
-    <div class="container text-center text-secondary">
-      <p>&copy; 2025 Octopunk. All rights reserved.</p>
-    </div>
-  </footer>
+  <Footer />
 </div>
 
 <style>
-  .hero h2 {
+  .hero h1 {
     font-size: 48px;
     font-weight: 700;
     letter-spacing: -1px;
+    line-height: 1.1;
+  }
+
+  .hero-tagline {
+    font-size: 20px;
+    font-weight: 500;
   }
 
   .beta-banner {
@@ -189,12 +225,15 @@
   }
 
   @media (max-width: 600px) {
-    .hero h2 {
+    .hero h1 {
       font-size: 32px;
       letter-spacing: -0.5px;
     }
     .hero p {
       font-size: 16px;
+    }
+    .hero-tagline {
+      font-size: 17px;
     }
   }
 
@@ -267,11 +306,6 @@
     font-size: 18px;
     font-weight: 600;
     margin-bottom: 8px;
-  }
-
-  .page-footer {
-    padding: 24px 0;
-    border-top: 1px solid var(--color-border-primary);
   }
 
   /* Screenshot section with cyberpunk glow */

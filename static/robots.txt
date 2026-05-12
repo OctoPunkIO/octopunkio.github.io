@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Auth-gated pages — do not index even if a URL leaks.
+Disallow: /dashboard
+Disallow: /callback
+Disallow: /admin
+
+Sitemap: https://www.octopunk.io/sitemap.xml

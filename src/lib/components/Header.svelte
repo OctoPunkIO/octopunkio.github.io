@@ -25,6 +25,7 @@
     { href: '/about',   label: 'About',             match: ['/about'] },
     { href: '/blog',    label: 'Blog',              match: ['/blog'] },
     { href: '/docs',    label: 'Docs and features', match: ['/docs'] },
+    { href: '/compare', label: 'Compare',           match: ['/compare'] },
     { href: '/pricing', label: 'Pricing',           match: ['/pricing'] }
   ];
 
@@ -41,7 +42,7 @@
   <div class="container header-row">
     <a href="/" class="logo" aria-label="Octopunk home">
       <img src="/octopunk-icon.png" alt="" class="logo-icon" />
-      <h1>Octopunk</h1>
+      <span class="logo-wordmark">Octopunk</span>
     </a>
 
     <!-- Desktop nav: shown ≥720px -->
@@ -147,7 +148,7 @@
             drop-shadow(0 0 16px rgba(236, 72, 153, 0.4));
   }
 
-  .logo h1 {
+  .logo-wordmark {
     font-family: 'Audiowide', sans-serif;
     font-size: 20px;
     font-weight: 700;

@@ -1,5 +1,6 @@
 <script>
   import Header from '$lib/components/Header.svelte';
+  import Seo from '$lib/components/Seo.svelte';
 
   let copied = false;
 
@@ -16,10 +17,10 @@
   }
 </script>
 
-<svelte:head>
-  <title>About - Octopunk</title>
-  <meta name="description" content="A small team of developers building the GitHub client we always wanted." />
-</svelte:head>
+<Seo
+  title="About"
+  description="The story behind Octopunk — a small team building the GitHub Desktop alternative they always wanted: keyboard-driven, fast, and out of your way."
+/>
 
 <div class="page">
   <Header />
@@ -27,7 +28,7 @@
   <main class="page-content">
     <div class="container about-container">
       <section class="about-hero">
-        <h2>About Octopunk</h2>
+        <h1>About Octopunk</h1>
         <p class="lede">A GitHub client for people who'd rather not live in a browser tab.</p>
       </section>
 
@@ -118,7 +119,7 @@
     border-bottom: 1px solid var(--color-border-primary);
   }
 
-  .about-hero h2 {
+  .about-hero h1 {
     font-size: 40px;
     font-weight: 700;
     letter-spacing: -0.02em;
@@ -245,7 +246,7 @@
     .about-container {
       padding-top: 32px;
     }
-    .about-hero h2 {
+    .about-hero h1 {
       font-size: 32px;
     }
     .contact-card {

@@ -3,6 +3,7 @@
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
   import { getMe, clearAuthCache } from '$lib/api.js';
+  import Seo from '$lib/components/Seo.svelte';
 
   let error = null;
 
@@ -25,6 +26,8 @@
     }
   });
 </script>
+
+<Seo title="Signing in" description="Completing GitHub sign-in." noindex={true} />
 
 <div class="page">
   <main class="page-content">

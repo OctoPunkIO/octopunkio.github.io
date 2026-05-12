@@ -1,6 +1,7 @@
 <script>
 	import { marked } from 'marked';
 	import { docDirectives } from '$lib/docs/markedDirectives.js';
+	import Seo from '$lib/components/Seo.svelte';
 
 	export let data;
 
@@ -79,9 +80,10 @@
 	}
 </script>
 
-<svelte:head>
-	<title>{data.meta.title || 'Documentation'} - Octopunk</title>
-</svelte:head>
+<Seo
+	title={data.meta.title || 'Documentation'}
+	description={data.meta.description || `${data.meta.title || 'Documentation'} — Octopunk docs.`}
+/>
 
 <div class="docs-page">
 	<aside class="docs-sidebar">

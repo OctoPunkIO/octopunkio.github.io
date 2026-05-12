@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
   import { getMe, adminLogin, getGitHubAuthURL } from '$lib/api.js';
+  import Seo from '$lib/components/Seo.svelte';
 
   let loading = true;
   let authorized = false;
@@ -54,6 +55,8 @@
     }
   }
 </script>
+
+<Seo title="Admin" description="Octopunk administration." noindex={true} />
 
 {#if loading}
   <div class="page">

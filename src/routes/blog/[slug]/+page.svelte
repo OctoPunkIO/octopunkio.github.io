@@ -1,6 +1,7 @@
 <script>
   import { marked } from 'marked';
   import Header from '$lib/components/Header.svelte';
+  import Seo from '$lib/components/Seo.svelte';
 
   export let data;
 
@@ -72,12 +73,13 @@
   }
 </script>
 
-<svelte:head>
-  <title>{data.meta.title} - Octopunk Blog</title>
-  {#if data.meta.excerpt}
-    <meta name="description" content={data.meta.excerpt} />
-  {/if}
-</svelte:head>
+<Seo
+  title={data.meta.title}
+  description={data.meta.excerpt || `Read "${data.meta.title}" on the Octopunk blog.`}
+  type="article"
+  publishedTime={data.meta.date || ''}
+  author={data.meta.author || ''}
+/>
 
 <div class="post-page">
   <Header />
