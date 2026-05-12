@@ -14,7 +14,7 @@ By holding :key[ALT] and clicking on an object you will make the AI aware of wha
 you are focusing on. From there you are able to ask it specific questions.
 
 When there is no selection the AI assistant will evaluate the entire page as
-context, still fullfilling your request intelligently.
+context, still fulfilling your request intelligently.
 
 <video src="/screens/ai-assistant.processed.mp4" controls autoplay muted loop playsinline></video>
 
@@ -22,7 +22,7 @@ context, still fullfilling your request intelligently.
 
 Octopunk's AI assistant allows you to use the AI provider of your choice.
 
-The currently supported set of AI backends are
+The currently supported set of AI backends is
 
 - Anthropic
 - Google Gemini

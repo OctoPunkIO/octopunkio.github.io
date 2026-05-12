@@ -5,7 +5,7 @@ order: 3
 
 # Dashboard
 
-The dashboard is an customizable always-present heads up display of your
+The dashboard is a customizable always-present heads-up display of your
 GitHub activity.
 
 The following video clip gets you acquainted with the dashboard and its features.
@@ -33,7 +33,7 @@ The search widgets support all search queries available to the [GitHub search AP
 ## Your feed widget
 
 The feed widget displays your user's activity feed. These are the events
-that are particularily interesting to you, often driven by who you follow, who
+that are particularly interesting to you, often driven by who you follow, who
 follows you, who has starred your repo, and what repos you have starred.
 
 This can be thought of as your "social media" feed.
@@ -54,9 +54,9 @@ platform activity.
 ## Notification inbox
 
 Octopunk makes large improvements to GitHub notifications and this is covered
-in it's own dedicated section.
+in its own dedicated section.
 
-The notificatoin inbox card shows a subset of GitHub notifications you have
+The notification inbox card shows a subset of GitHub notifications you have
 expressed interest in. Octopunk allows the filtering-down of notifications.
 These filtered-down notifications are delivered to your inbox if desired.
 

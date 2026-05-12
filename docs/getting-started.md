@@ -51,7 +51,7 @@ This welcome screen prompts you to authenticate with GitHub.
 
 <img src="/screens/octopunk-authentication-greeter.png"></img>
 
-You can authenticate with a API token or via the OAuth flow.
+You can authenticate with an API token or via the OAuth flow.
 
 ## API Token
 
@@ -76,10 +76,10 @@ for in-depth documentation on creating and managing API tokens.
 OctoPunk supports OAuth authentication. However, due to OctoPunk being a full-fledged
 GitHub platform client, this authentication method can be less convenient.
 
-When authenticating via OAuth OctoPunk is presenting itself as an GitHub application
-to the GitHub platform. This is a different security model then token based authentication.
+When authenticating via OAuth OctoPunk is presenting itself as a GitHub application
+to the GitHub platform. This is a different security model than token-based authentication.
 
-When using OAauth, resourced you access such as repositories will need to grant
+When using OAuth, resources you access such as repositories will need to grant
 permissions to the OctoPunk application. And this will have to be done on a
 per-organization or per-resource level.
 

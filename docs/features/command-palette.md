@@ -8,7 +8,7 @@ order: 5
 The command palette lists context aware commands and supports fuzzy searching.
 Open it with :key[⌘+P].
 
-The comman palette is context aware and will display different sets of commands
+The command palette is context aware and will display different sets of commands
 depending on what you are viewing. Pull requests, issues, user pages, etc...
 have their own set of commands, with their own scoped keybinds as well.
 
