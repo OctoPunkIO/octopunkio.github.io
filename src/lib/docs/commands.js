@@ -29,5 +29,17 @@ export const commands = {
     label: 'Show Notifications',
     description: 'Open the notifications page',
     icon: 'bell'
+  },
+  'report-a-bug': {
+    label: 'Report a bug',
+    description: 'Open a new bug-report issue in the community repo',
+    icon: 'bug'
+  },
+  // Documented ahead of the desktop registry; ship the desktop command
+  // before this entry shows up referenced in production content.
+  'suggest-a-feature': {
+    label: 'Suggest a feature',
+    description: 'Open a new feature-request issue in the community repo',
+    icon: 'light-bulb'
   }
 };

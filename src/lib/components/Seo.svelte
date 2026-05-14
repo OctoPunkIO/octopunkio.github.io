@@ -30,7 +30,13 @@
 
   $: pathname = $page?.url?.pathname || '/';
   $: resolvedCanonical = canonical || canonicalFor(pathname);
-  $: fullTitle = title ? `${title} — ${SITE_NAME}` : DEFAULT_TITLE;
+  // Skip the " — Octopunk" suffix when the page's own title already
+  // contains the brand name, to avoid "Introducing Octopunk … — Octopunk".
+  $: fullTitle = !title
+    ? DEFAULT_TITLE
+    : title.toLowerCase().includes(SITE_NAME.toLowerCase())
+      ? title
+      : `${title} — ${SITE_NAME}`;
   $: ogImage = absoluteImage(image);
 </script>
 

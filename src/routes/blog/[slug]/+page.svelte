@@ -2,6 +2,7 @@
   import { marked } from 'marked';
   import Header from '$lib/components/Header.svelte';
   import Seo from '$lib/components/Seo.svelte';
+  import { docDirectives } from '$lib/docs/markedDirectives.js';
 
   export let data;
 
@@ -25,7 +26,7 @@
 
   function parseMarkdown(markdown) {
     const { renderer, tocEntries } = createRenderer();
-    marked.use({ renderer });
+    marked.use({ renderer, extensions: docDirectives });
     const html = marked.parse(markdown);
     toc = tocEntries;
     return html;
@@ -263,6 +264,179 @@
     max-width: 100%;
     border-radius: 6px;
     margin: 12px 0;
+  }
+
+  /* Inline command palette card — mirrors a desktop palette entry row.
+     Same styling as the docs page so :command[id] renders consistently. */
+  .prose :global(.cmd-card) {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 3px 6px 3px 8px;
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border-primary);
+    border-radius: 6px;
+    font-size: 14px;
+    line-height: 1.2;
+    color: var(--color-text-primary);
+    vertical-align: baseline;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .prose :global(.cmd-card:hover) {
+    background: var(--color-bg-tertiary);
+    border-color: #a855f7;
+  }
+
+  .prose :global(.cmd-card-icon) {
+    display: inline-flex;
+    align-items: center;
+    color: #ffffff;
+  }
+
+  .prose :global(.cmd-card-icon svg) {
+    display: block;
+    fill: currentColor;
+  }
+
+  .prose :global(.cmd-card-label) {
+    font-weight: 500;
+  }
+
+  .prose :global(.cmd-card-badge) {
+    display: inline-flex;
+    align-items: center;
+    padding: 1px 5px;
+    margin-left: 2px;
+    background: var(--color-bg-tertiary);
+    border: 1px solid var(--color-border-primary);
+    border-radius: 4px;
+    font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+    font-size: 11px;
+    color: var(--color-text-secondary);
+    letter-spacing: 0.02em;
+  }
+
+  .prose :global(.cmd-card-unknown) {
+    background: rgba(248, 81, 73, 0.15);
+    border-color: #f85149;
+    color: #f85149;
+    font-family: ui-monospace, SFMono-Regular, monospace;
+  }
+
+  .prose :global(.key-chip) {
+    display: inline-block;
+    padding: 2px 6px;
+    background: var(--color-bg-tertiary);
+    border: 1px solid var(--color-border-primary);
+    border-radius: 4px;
+    font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    line-height: 1.4;
+    vertical-align: baseline;
+  }
+
+  /* Demo-frame wrapper: matches the homepage hero-video treatment.
+     The animated gradient border + soft glow tell the reader "this is
+     a product demo, not a stock screenshot." Constrains the media so
+     a 1080p screen recording doesn't dominate the post. */
+  .prose :global(.demo-frame) {
+    position: relative;
+    max-width: 600px;
+    margin: 32px auto;
+    padding: 2px;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #a855f7, #ec4899, #f97316, #eab308, #a855f7);
+    background-size: 300% 100%;
+    animation: demo-frame-flow 8s ease infinite;
+    line-height: 0;
+  }
+
+  .prose :global(.demo-frame::before) {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #a855f7, #ec4899, #f97316, #eab308, #a855f7);
+    background-size: 300% 100%;
+    animation: demo-frame-flow 8s ease infinite;
+    filter: blur(12px);
+    opacity: 0.45;
+    z-index: -1;
+  }
+
+  .prose :global(.demo-frame video),
+  .prose :global(.demo-frame img),
+  .prose :global(.demo-frame .demo-cycle) {
+    display: block;
+    width: 100%;
+    margin: 0;
+    border: none;
+    border-radius: 6px;
+    clip-path: inset(0 round 6px);
+    vertical-align: top;
+  }
+
+  /* Stacked-frame cycler: stand-in for a "GIF" without shipping a GIF. The
+     same wrapper used for videos applies the gradient border + glow; this
+     adds an absolute-positioned image stack that swipes left-to-right. */
+  .prose :global(.demo-cycle) {
+    position: relative;
+    aspect-ratio: 8 / 5;
+    overflow: hidden;
+  }
+
+  .prose :global(.demo-cycle img) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    margin: 0;
+    border-radius: 0;
+    transform: translateX(100%);
+    animation: demo-swipe-3 12s ease-in-out infinite;
+  }
+
+  /* Delays are tuned so that:
+       - Image 1 lands centered at page load (no initial slide-in flicker).
+       - Each subsequent image starts sliding in AT THE SAME TIME the
+         previous image starts sliding out, so the two images swipe past
+         each other across the frame. No empty "glow only" gap.
+     With a 4s slot per image (3.7s centered + 0.3s slide), image 2 starts
+     at t=3.7s and image 3 at t=7.7s. Image 1 is offset -0.3s so it's
+     already centered when the cycle reaches t=0.
+
+     `--cycle-offset` is a per-instance jitter applied via inline style on
+     the parent .demo-frame. It shifts an entire cycle's phase so multiple
+     cycles on the same page don't swipe in lockstep. Default 0s. Use
+     negative values up to about -3s so the first image stays centered at
+     load. */
+  .prose :global(.demo-cycle img:nth-child(1)) { animation-delay: calc(-0.3s + var(--cycle-offset, 0s)); }
+  .prose :global(.demo-cycle img:nth-child(2)) { animation-delay: calc( 3.7s + var(--cycle-offset, 0s)); }
+  .prose :global(.demo-cycle img:nth-child(3)) { animation-delay: calc( 7.7s + var(--cycle-offset, 0s)); }
+
+  @keyframes demo-frame-flow {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* Swipe pattern (12s cycle = 4s per frame, 0.3s slide):
+       - 0-2.5%     (0-0.3s):   sliding in from the right
+       - 2.5-33.33% (0.3-4s):   centered, visible
+       - 33.33-35.83% (4-4.3s): sliding out to the left
+       - 35.83-100%:            off-screen left, waiting for next loop
+     The slide-out window of image N overlaps exactly with the slide-in of
+     image N+1 (see delays above), producing a continuous swipe. */
+  @keyframes demo-swipe-3 {
+    0%      { transform: translateX(100%); }
+    2.5%    { transform: translateX(0); }
+    33.33%  { transform: translateX(0); }
+    35.83%  { transform: translateX(-100%); }
+    100%    { transform: translateX(-100%); }
   }
 
   .prose :global(hr) {
