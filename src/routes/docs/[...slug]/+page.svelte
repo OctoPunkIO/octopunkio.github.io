@@ -23,7 +23,7 @@
 				}
 
 				if (depth === 1 && text.includes('Octopunk')) {
-					return `<h1 id="${slug}"><img src="/octopunk-icon.png" alt="" class="h1-logo" />${content}</h1>`;
+					return `<h1 id="${slug}"><img src="/octopunk-icon.png" alt="Octopunk logo" class="h1-logo" />${content}</h1>`;
 				}
 				return `<h${depth} id="${slug}">${content}</h${depth}>`;
 			}
@@ -94,7 +94,7 @@
 				</svg>
 			</a>
 			<a href="/docs" class="sidebar-title">
-				<img src="/octopunk-icon.png" alt="" class="sidebar-logo" />
+				<img src="/octopunk-icon.png" alt="Octopunk logo" class="sidebar-logo" />
 				Documentation
 			</a>
 		</div>

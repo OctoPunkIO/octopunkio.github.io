@@ -41,7 +41,7 @@
 <header class="page-header">
   <div class="container header-row">
     <a href="/" class="logo" aria-label="Octopunk home">
-      <img src="/octopunk-icon.png" alt="" class="logo-icon" />
+      <img src="/octopunk-icon.png" alt="Octopunk logo" class="logo-icon" />
       <span class="logo-wordmark">Octopunk</span>
     </a>
 

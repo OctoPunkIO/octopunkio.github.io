@@ -5,8 +5,10 @@
 export const SITE_URL = 'https://www.octopunk.io';
 export const SITE_NAME = 'Octopunk';
 export const DEFAULT_TITLE = 'Octopunk — A GitHub Desktop alternative for power users';
+// Length kept under 160 chars so it doesn't get truncated in Google SERPs or
+// flagged as too-long by Bing Webmaster Tools.
 export const DEFAULT_DESCRIPTION =
-  'Octopunk is a keyboard-driven GitHub client for Mac, Linux, and Windows. Fuzzy search across repos, custom dashboards, LSP-aware PR review, and an AI assistant — a GitHub Desktop alternative that finally works like your editor.';
+  'A keyboard-driven GitHub client for the desktop. Notifications, full PR review, projects, discussions — a GitHub Desktop alternative for power users.';
 export const DEFAULT_OG_IMAGE = '/og-cover.png';
 
 /**
