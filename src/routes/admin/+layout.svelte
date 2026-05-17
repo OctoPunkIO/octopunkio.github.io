@@ -56,7 +56,7 @@
   }
 </script>
 
-<Seo title="Admin" description="Octopunk administration." noindex={true} />
+<Seo title="Admin" description="OctoPunk administration." noindex={true} />
 
 {#if loading}
   <div class="page">

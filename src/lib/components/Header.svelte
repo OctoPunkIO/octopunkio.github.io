@@ -40,9 +40,9 @@
 
 <header class="page-header">
   <div class="container header-row">
-    <a href="/" class="logo" aria-label="Octopunk home">
-      <img src="/octopunk-icon.png" alt="Octopunk logo" class="logo-icon" />
-      <span class="logo-wordmark">Octopunk</span>
+    <a href="/" class="logo" aria-label="OctoPunk home">
+      <img src="/octopunk-icon.png" alt="OctoPunk logo" class="logo-icon" />
+      <span class="logo-wordmark">OctoPunk</span>
     </a>
 
     <!-- Desktop nav: shown ≥720px -->

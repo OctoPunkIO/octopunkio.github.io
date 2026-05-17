@@ -20,7 +20,7 @@
 
 <Seo
   title="GitHub Desktop alternatives"
-  description="An honest comparison of Octopunk against GitHub Desktop, GitKraken, the VS Code Pull Requests extension, and JetBrains' GitHub plugin. The only desktop GitHub client that covers notifications, PR review, issues, projects, discussions, and actions in one window."
+  description="An honest comparison of OctoPunk against GitHub Desktop, GitKraken, the VS Code Pull Requests extension, and JetBrains' GitHub plugin. The only desktop GitHub client that covers notifications, PR review, issues, projects, discussions, and actions in one window."
 />
 
 <div class="page">
@@ -31,12 +31,12 @@
       <section class="compare-hero">
         <h1>GitHub Desktop alternatives</h1>
         <p class="lede">
-          Octopunk is the only full-featured GitHub client for the desktop.
+          OctoPunk is the only full-featured GitHub client for the desktop.
         </p>
         <p class="sublede">
           Every other "GitHub client" covers a slice — pull requests in your editor,
           notifications in your menubar, or a friendlier wrapper around <code>git push</code>.
-          Octopunk covers the whole platform: notifications, PR review, issues, projects,
+          OctoPunk covers the whole platform: notifications, PR review, issues, projects,
           discussions, and actions, in one window.
         </p>
       </section>
@@ -99,9 +99,9 @@
       </section>
 
       <section class="compare-cta">
-        <h2>Try Octopunk</h2>
+        <h2>Try OctoPunk</h2>
         <p>Free for public repositories. Mac, Linux, and Windows.</p>
-        <a href="/" class="btn btn-primary btn-large">Get Octopunk</a>
+        <a href="/" class="btn btn-primary btn-large">Get OctoPunk</a>
       </section>
     </div>
   </main>

@@ -53,11 +53,11 @@ platform activity.
 
 ## Notification inbox
 
-Octopunk makes large improvements to GitHub notifications and this is covered
+OctoPunk makes large improvements to GitHub notifications and this is covered
 in its own dedicated section.
 
 The notification inbox card shows a subset of GitHub notifications you have
-expressed interest in. Octopunk allows the filtering-down of notifications.
+expressed interest in. OctoPunk allows the filtering-down of notifications.
 These filtered-down notifications are delivered to your inbox if desired.
 
 ## Recently viewed

@@ -83,7 +83,7 @@ ${post.excerpt ? `    <summary>${escapeXml(post.excerpt)}</summary>\n` : ''}    
 <feed xmlns="http://www.w3.org/2005/Atom">
   <id>${escapeXml(FEED_ID)}</id>
   <title>${escapeXml(SITE_NAME)} Blog</title>
-  <subtitle>Notes, releases, and assorted thoughts from the Octopunk team.</subtitle>
+  <subtitle>Notes, releases, and assorted thoughts from the OctoPunk team.</subtitle>
   <link href="${escapeXml(FEED_URL)}" rel="self" type="application/atom+xml" />
   <link href="${escapeXml(SITE_URL + '/blog')}" rel="alternate" type="text/html" />
   <updated>${updated}</updated>

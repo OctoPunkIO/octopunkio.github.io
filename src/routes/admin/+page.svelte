@@ -27,7 +27,7 @@
   <header class="page-header">
     <div class="container flex justify-between items-center">
       <div class="logo">
-        <a href="/"><h1>Octopunk</h1></a>
+        <a href="/"><h1>OctoPunk</h1></a>
         <span class="admin-badge">Admin</span>
       </div>
       <nav class="flex items-center gap-4">

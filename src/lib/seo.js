@@ -3,8 +3,8 @@
 // prerendered HTML.
 
 export const SITE_URL = 'https://www.octopunk.io';
-export const SITE_NAME = 'Octopunk';
-export const DEFAULT_TITLE = 'Octopunk — A GitHub Desktop alternative for power users';
+export const SITE_NAME = 'OctoPunk';
+export const DEFAULT_TITLE = 'OctoPunk — A GitHub Desktop alternative for power users';
 // Length kept under 160 chars so it doesn't get truncated in Google SERPs or
 // flagged as too-long by Bing Webmaster Tools.
 export const DEFAULT_DESCRIPTION =

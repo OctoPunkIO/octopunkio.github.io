@@ -142,7 +142,7 @@ export const TOOLS = [
   },
   {
     key: 'octopunk',
-    name: 'Octopunk',
+    name: 'OctoPunk',
     tagline: 'A real GitHub client for the desktop.',
     url: '/',
     pricing: 'Free for public repos · paid for private',

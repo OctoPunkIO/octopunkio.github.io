@@ -19,7 +19,7 @@
 
 <Seo
   title="About"
-  description="The story behind Octopunk — a small team building the GitHub Desktop alternative they always wanted: keyboard-driven, fast, and out of your way."
+  description="The story behind OctoPunk — a small team building the GitHub Desktop alternative they always wanted: keyboard-driven, fast, and out of your way."
 />
 
 <div class="page">
@@ -28,13 +28,13 @@
   <main class="page-content">
     <div class="container about-container">
       <section class="about-hero">
-        <h1>About Octopunk</h1>
+        <h1>About OctoPunk</h1>
         <p class="lede">A GitHub client for people who'd rather not live in a browser tab.</p>
       </section>
 
       <section class="about-prose">
         <p>
-          Octopunk was built by a small team of developers who got fed up with using GitHub.
+          OctoPunk was built by a small team of developers who got fed up with using GitHub.
         </p>
 
         <p>
@@ -65,7 +65,7 @@
 
         <p>
           Drop by the
-          <a href="https://github.com/octopunkio/community" target="_blank" rel="noopener">Octopunk community repo</a>
+          <a href="https://github.com/octopunkio/community" target="_blank" rel="noopener">OctoPunk community repo</a>
           to file bugs, request features, or just say hi.
         </p>
 

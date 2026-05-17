@@ -76,7 +76,7 @@
 
 <Seo
   title={data.meta.title}
-  description={data.meta.excerpt || `Read "${data.meta.title}" on the Octopunk blog.`}
+  description={data.meta.excerpt || `Read "${data.meta.title}" on the OctoPunk blog.`}
   type="article"
   publishedTime={data.meta.date || ''}
   author={data.meta.author || ''}

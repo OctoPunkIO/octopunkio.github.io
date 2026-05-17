@@ -42,7 +42,7 @@
   {@html `<script type="application/ld+json">${JSON.stringify({
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
-    name: 'Octopunk',
+    name: 'OctoPunk',
     description: DEFAULT_DESCRIPTION,
     url: SITE_URL,
     applicationCategory: 'DeveloperApplication',
@@ -55,7 +55,7 @@
     },
     author: {
       '@type': 'Organization',
-      name: 'Octopunk',
+      name: 'OctoPunk',
       url: SITE_URL,
       sameAs: ['https://www.linkedin.com/company/octopunk']
     }
@@ -90,7 +90,7 @@
           A GitHub Desktop alternative for Mac, Linux, and Windows — built for power users.
         </p>
         <p class="text-secondary mt-4">
-          Octopunk is a GitHub client built for the modern hacker. Fuzzy search across repos,
+          OctoPunk is a GitHub client built for the modern hacker. Fuzzy search across repos,
           create tailored dashboard views, LSP aware, and keyboard shortcuts everywhere — GitHub that finally works like your editor.
         </p>
         <p class="text-secondary mt-4">

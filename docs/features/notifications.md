@@ -5,7 +5,7 @@ order: 7
 
 # Notifications
 
-Octopunk completely reimagines how notifications work in the GitHub platform.
+OctoPunk completely reimagines how notifications work in the GitHub platform.
 
 One of the most repeated complaints we hear about GitHub is how unmanageable the
 notification system can be.
@@ -16,7 +16,7 @@ sense of.
 Likewise, the GitHub platform does not allow filtering certain events to your user, creating even
 more noise as you receive events for organizations and groups without a great way to filter them.
 
-Octopunk solves this by both filtering notifications and performing post-notification enrichment.
+OctoPunk solves this by both filtering notifications and performing post-notification enrichment.
 
 The following video clip gets you acquainted with the notification system.
 
@@ -26,7 +26,7 @@ The following video clip gets you acquainted with the notification system.
 
 Open the notifications page with :command[global-notifications].
 
-Octopunk organizes notifications by filters.
+OctoPunk organizes notifications by filters.
 
 A filter is created by clicking the plus button on the notifications primary tab.
 
@@ -46,12 +46,12 @@ inbox.
 Each notification in the dashboard inbox has a pill which displays the source filter name and is colored
 corresponding to the color of the filter.
 
-When Octopunk first starts a default 'all' filter is subscribed to. For convenience, as soon as a custom filter is created and subscribed to, the 'all' filter
+When OctoPunk first starts a default 'all' filter is subscribed to. For convenience, as soon as a custom filter is created and subscribed to, the 'all' filter
 can no longer be subscribed to. If you desire an 'all' filter after creating custom filters, simply create a filter with no query and subscribe to it.
 
-## Octopunk specific queries
+## OctoPunk specific queries
 
-Octopunk adds several notification filter queries made possible by its own post-notification enrichment phase.
+OctoPunk adds several notification filter queries made possible by its own post-notification enrichment phase.
 
 `reason: user-review-requested`: This filter query matches review requested notifications only when they pertain directly to the user. This is opposed to the 'review-requested' filter which matches when teams and organizations the user is a part of are requested as well.
 

@@ -14,7 +14,7 @@
 
 <Seo
   title="Blog"
-  description="Notes, releases, and assorted thoughts from the Octopunk team on building a GitHub client for power users."
+  description="Notes, releases, and assorted thoughts from the OctoPunk team on building a GitHub client for power users."
 />
 
 <div class="page">

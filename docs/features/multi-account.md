@@ -5,7 +5,7 @@ order: 8
 
 # Multi-account
 
-Octopunk supports using multiple accounts.
+OctoPunk supports using multiple accounts.
 
 Each account owns a isolated view of the application including their own dashboard
 and tabs.

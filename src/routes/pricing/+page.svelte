@@ -97,7 +97,7 @@
 
 <Seo
   title="Pricing"
-  description="Octopunk is free for public repositories on Mac, Linux, and Windows. Subscribe to unlock private repositories — fixed monthly or annual pricing, no surprises."
+  description="OctoPunk is free for public repositories on Mac, Linux, and Windows. Subscribe to unlock private repositories — fixed monthly or annual pricing, no surprises."
 />
 
 <div class="page">
@@ -144,7 +144,7 @@
               {:else}
                 <div class="download-dropdown" bind:this={dropdownButton}>
                   <button class="btn btn-secondary btn-block" on:click={toggleDropdown}>
-                    Download Octopunk
+                    Download OctoPunk
                     <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" class="chevron" class:open={dropdownOpen}>
                       <path d="M12.78 5.22a.749.749 0 0 1 0 1.06l-4.25 4.25a.749.749 0 0 1-1.06 0L3.22 6.28a.749.749 0 1 1 1.06-1.06L8 8.939l3.72-3.719a.749.749 0 0 1 1.06 0Z"/>
                     </svg>

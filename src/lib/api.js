@@ -1,4 +1,4 @@
-// API client for Octopunk backend
+// API client for OctoPunk backend
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080';
 

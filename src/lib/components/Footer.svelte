@@ -1,12 +1,12 @@
 <footer class="page-footer">
   <div class="container footer-row">
-    <p class="footer-copy text-secondary">&copy; 2025 Octopunk. All rights reserved.</p>
+    <p class="footer-copy text-secondary">&copy; 2025 OctoPunk. All rights reserved.</p>
     <nav class="footer-social" aria-label="Social">
       <a
         href="https://www.linkedin.com/company/octopunk"
         target="_blank"
         rel="noopener"
-        aria-label="Octopunk on LinkedIn"
+        aria-label="OctoPunk on LinkedIn"
         class="footer-social-link"
       >
         <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">

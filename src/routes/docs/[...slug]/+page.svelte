@@ -22,8 +22,8 @@
 					tocEntries.push({ level: depth, text, id: slug });
 				}
 
-				if (depth === 1 && text.includes('Octopunk')) {
-					return `<h1 id="${slug}"><img src="/octopunk-icon.png" alt="Octopunk logo" class="h1-logo" />${content}</h1>`;
+				if (depth === 1 && text.includes('OctoPunk')) {
+					return `<h1 id="${slug}"><img src="/octopunk-icon.png" alt="OctoPunk logo" class="h1-logo" />${content}</h1>`;
 				}
 				return `<h${depth} id="${slug}">${content}</h${depth}>`;
 			}
@@ -82,7 +82,7 @@
 
 <Seo
 	title={data.meta.title || 'Documentation'}
-	description={data.meta.description || `${data.meta.title || 'Documentation'} — Octopunk docs.`}
+	description={data.meta.description || `${data.meta.title || 'Documentation'} — OctoPunk docs.`}
 />
 
 <div class="docs-page">
@@ -94,7 +94,7 @@
 				</svg>
 			</a>
 			<a href="/docs" class="sidebar-title">
-				<img src="/octopunk-icon.png" alt="Octopunk logo" class="sidebar-logo" />
+				<img src="/octopunk-icon.png" alt="OctoPunk logo" class="sidebar-logo" />
 				Documentation
 			</a>
 		</div>

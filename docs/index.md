@@ -3,15 +3,15 @@ title: Documentation
 order: 1
 ---
 
-# Octopunk Documentation
+# OctoPunk Documentation
 
-Welcome to the Octopunk documentation. Octopunk is a modern, keyboard-driven GitHub client built for developers who want a faster, more efficient way to navigate the GitHub platform.
+Welcome to the OctoPunk documentation. OctoPunk is a modern, keyboard-driven GitHub client built for developers who want a faster, more efficient way to navigate the GitHub platform.
 
 ## Getting Started
 
-New to Octopunk? Start here:
+New to OctoPunk? Start here:
 
-- [Getting started](/docs/getting-started) - Download and install Octopunk
+- [Getting started](/docs/getting-started) - Download and install OctoPunk
 
 ## What is OctoPunk?
 

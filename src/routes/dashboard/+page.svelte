@@ -407,14 +407,14 @@
   $: licensed = (user, subscriptionState, isLicensed());
 </script>
 
-<Seo title="Dashboard" description="Manage your Octopunk subscription." noindex={true} />
+<Seo title="Dashboard" description="Manage your OctoPunk subscription." noindex={true} />
 
 <div class="page">
   <header class="page-header">
     <div class="container flex justify-between items-center">
       <a href="/" class="logo">
-        <img src="/octopunk-icon.png" alt="Octopunk" class="logo-icon" />
-        <span class="logo-wordmark">Octopunk</span>
+        <img src="/octopunk-icon.png" alt="OctoPunk" class="logo-icon" />
+        <span class="logo-wordmark">OctoPunk</span>
       </a>
       <nav class="flex items-center gap-4">
         {#if user?.is_admin}
@@ -677,9 +677,9 @@
         </div>
 
         <div class="card mt-8">
-          <h3>Download Octopunk</h3>
+          <h3>Download OctoPunk</h3>
           <p class="text-secondary mt-4">
-            Download the Octopunk desktop app to get started.
+            Download the OctoPunk desktop app to get started.
           </p>
           <div class="stream-select mt-4">
             <label for="stream-select">Release channel</label>

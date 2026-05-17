@@ -5,11 +5,11 @@ order: 2
 
 # Getting started
 
-Get up and running with Octopunk in just a few minutes.
+Get up and running with OctoPunk in just a few minutes.
 
 ## Download
 
-Octopunk is available for macOS, Windows, and Linux:
+OctoPunk is available for macOS, Windows, and Linux:
 
 Visit the [Homepage](/) page to download the latest version.
 

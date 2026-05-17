@@ -30,8 +30,8 @@
 
   $: pathname = $page?.url?.pathname || '/';
   $: resolvedCanonical = canonical || canonicalFor(pathname);
-  // Skip the " — Octopunk" suffix when the page's own title already
-  // contains the brand name, to avoid "Introducing Octopunk … — Octopunk".
+  // Skip the " — OctoPunk" suffix when the page's own title already
+  // contains the brand name, to avoid "Introducing OctoPunk … — OctoPunk".
   $: fullTitle = !title
     ? DEFAULT_TITLE
     : title.toLowerCase().includes(SITE_NAME.toLowerCase())

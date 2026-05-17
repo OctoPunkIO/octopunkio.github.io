@@ -20,7 +20,7 @@ context, still fulfilling your request intelligently.
 
 ## Configuration
 
-Octopunk's AI assistant allows you to use the AI provider of your choice.
+OctoPunk's AI assistant allows you to use the AI provider of your choice.
 
 The currently supported set of AI backends is
 
@@ -40,5 +40,5 @@ Once the API key is applied and validated a model can be selected.
 The AI assistant has tools for performing code reviews, helping craft comments,
 cloning code for better analysis and more.
 
-We are constantly improving the capabilities of Octopunk's AI assistant.
+We are constantly improving the capabilities of OctoPunk's AI assistant.
 The best way to understand its capabilities is to prompt it with your tasks.
