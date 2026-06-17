@@ -25,8 +25,9 @@ OctoPunk's AI assistant allows you to use the AI provider of your choice.
 The currently supported set of AI backends is
 
 - Anthropic
-- Google Gemini (coming soon)
-- OpenAI (coming soon)
+- Google Gemini
+- OpenAI
+- DeepSeek
 
 You must supply an API key from :command[global-settings] before the AI
 assistant can respond to a prompt.
