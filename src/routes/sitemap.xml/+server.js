@@ -8,9 +8,8 @@ export const prerender = true;
 const BLOG_DIR = path.join(process.cwd(), 'blog');
 const DOCS_DIR = path.join(process.cwd(), 'docs');
 
-// Public, indexable routes. Auth-gated ones (dashboard, callback, admin) are
-// excluded here and also blocked in robots.txt.
-const STATIC_ROUTES = ['/', '/about', '/pricing', '/blog', '/compare'];
+// Public, indexable routes.
+const STATIC_ROUTES = ['/', '/about', '/blog'];
 
 async function listBlogSlugs() {
   let entries;
