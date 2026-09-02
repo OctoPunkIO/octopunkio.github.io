@@ -4,11 +4,11 @@
 
 export const SITE_URL = 'https://www.octopunk.io';
 export const SITE_NAME = 'OctoPunk';
-export const DEFAULT_TITLE = 'OctoPunk — A GitHub Desktop alternative for power users';
+export const DEFAULT_TITLE = 'OctoPunk — A really good GitHub client for macOS';
 // Length kept under 160 chars so it doesn't get truncated in Google SERPs or
 // flagged as too-long by Bing Webmaster Tools.
 export const DEFAULT_DESCRIPTION =
-  'A keyboard-driven GitHub client for the desktop. Notifications, full PR review, projects, discussions — a GitHub Desktop alternative for power users.';
+  'A really good GitHub client for macOS. Notifications, full PR review, projects, discussions, and code intelligence — built for developers who live on GitHub.';
 export const DEFAULT_OG_IMAGE = '/og-cover.png';
 
 /**

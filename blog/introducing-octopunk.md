@@ -2,7 +2,7 @@
 title: "Introducing OctoPunk: who we are, what we're building, and how to try it"
 date: 2026-05-12
 author: The OctoPunk team
-excerpt: We've been living inside a browser tab for ten years. The beta is open.
+excerpt: We've been living inside a browser tab for ten years. Here's what we built.
 ---
 
 We've been living inside a browser tab for ten years. We want out.
@@ -10,8 +10,6 @@ We've been living inside a browser tab for ten years. We want out.
 GitHub is where the work happens, so the work has been stuck in Chrome, Firefox, or (*shivers*) Internet Explorer. Tab 14 is a pull request, tab 22 is an issue we meant to triage three days ago, the notifications bell is red and that means absolutely nothing. We've trained ourselves to ignore it.
 
 OctoPunk is what we built when we couldn't take it anymore. Not a `git` GUI with a "Create PR" button bolted on, a real client for the GitHub platform. The whole thing. On the desktop, where you actually work.
-
-Today the beta is open.
 
 <div class="demo-frame">
   <video src="/screens/octopunk-demo-reel.mp4" controls autoplay muted loop playsinline></video>
@@ -89,16 +87,12 @@ The features above are the ones we wanted to call out first. They aren't the who
 
 If you spend serious time on GitHub, the browser is the wrong interface. OctoPunk is the only tool that gives you the actual GitHub platform on the desktop. Notifications you can triage. PRs you can review in one window. Issues, projects, discussions, actions, and a code-review surface with real LSPs. Keyboard-first, the whole thing, not a browser tab in sight.
 
-## Getting the beta
+## Getting OctoPunk
 
-On the home page, scroll to the download buttons and click the "Looking for the beta?" link underneath them. That puts you on the beta channel and shows you the latest beta builds for Mac, Linux (flatpak), and Windows. All three.
+OctoPunk is coming to the Mac App Store. When it's live, grab it from the App Store like any other Mac app — no betas, no installers, just install and go.
 
-Free for public repos. Private repos need a Pro subscription, which you can set up from your account dashboard.
+Free for public repositories. Private repositories need OctoPunk Pro, an App Store subscription.
 
-A couple of things to know going in.
-
-- Beta builds break things. That's the deal.
-- We may reset the app data directory between releases. That clears your settings and your sign-in, you'll need to log in again. We try not to do it for fun but it happens.
 - File issues at the [community repo](https://github.com/octopunkio/community). Bugs, feature requests, just saying hi, all welcome.
 
 ## What this is, and what it is not
@@ -119,12 +113,10 @@ Yes, we have AI. It's in the middle of its own hype cycle and the hot air is imp
 
 The punk in OctoPunk is the part that says no to all of the above.
 
-## Already using the beta?
+## Tell us what you think
 
-Tell us what's broken. Tell us what's missing. Tell us what's slightly annoying. Beta input is the most useful thing we have right now, and we built the filing workflow into OctoPunk so the friction is as close to zero as we could make it.
+Tell us what's broken. Tell us what's missing. Tell us what's slightly annoying. We built the filing workflow into OctoPunk so the friction is as close to zero as we could make it.
 
 From inside the app, open the command palette and run :command[report-a-bug] to file a bug. Or :command[suggest-a-feature] to pitch one you want us to build. Both land in our community repo. Both get read.
 
-We've been using OctoPunk full-time to build OctoPunk for a while now. It is good enough that the browser tab habit is finally breaking. The beta is for everyone else who is sick of the tab graveyard.
-
-Go grab it.
+We've been using OctoPunk full-time to build OctoPunk for a while now. It is good enough that the browser tab habit is finally breaking. We can't wait for you to try it.

@@ -9,39 +9,13 @@ Get up and running with OctoPunk in just a few minutes.
 
 ## Download
 
-OctoPunk is available for macOS, Windows, and Linux:
+OctoPunk is available exclusively on macOS, distributed through the Mac App Store.
 
-Visit the [Homepage](/) page to download the latest version.
+Visit the [Homepage](/) and click "Get it on the Mac App Store".
 
 ## Installation
 
-### MacOS
-
-Open the downloaded `.dmg` file and follow the familiar installation process of
-dragging the OctoPunk application to the Applications folder.
-
-## Linux
-
-OctoPunk is packaged as a Linux flatpak application.
-
-After downloading the flatpak file you may install it as a user application.
-```
-flatpak install --user OctoPunk-*.flatpak
-```
-
-After installation the application will be available in the launcher on most
-popular distros. You can also launch it from the terminal with:
-```
-flatpak run io.github.octopunk
-```
-
-## Windows
-
-OctoPunk is packaged as an NSIS installer for Windows.
-
-After downloading the installer, run it and follow the installation process.
-
-OctoPunk will be available in the start menu after installation.
+OctoPunk installs like any other Mac app: open the Mac App Store, search for OctoPunk, and click Install. Updates are delivered automatically through the App Store.
 
 # Authentication
 

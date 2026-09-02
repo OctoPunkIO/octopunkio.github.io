@@ -11,7 +11,7 @@ Welcome to the OctoPunk documentation. OctoPunk is a modern, keyboard-driven Git
 
 New to OctoPunk? Start here:
 
-- [Getting started](/docs/getting-started) - Download and install OctoPunk
+- [Getting started](/docs/getting-started) - Install OctoPunk from the Mac App Store
 
 ## What is OctoPunk?
 

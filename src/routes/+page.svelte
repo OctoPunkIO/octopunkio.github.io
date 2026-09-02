@@ -1,39 +1,8 @@
 <script>
-  import { onMount } from 'svelte';
-  import { isAuthenticated, getGitHubAuthURL } from '$lib/api.js';
-  import { detectOS, fetchLatestDownloads, getStreamFromURL, groupArtifactsByFamily, OS_FAMILIES } from '$lib/downloads.js';
-  import DownloadButton from '$lib/components/DownloadButton.svelte';
   import Header from '$lib/components/Header.svelte';
   import Footer from '$lib/components/Footer.svelte';
   import Seo from '$lib/components/Seo.svelte';
   import { SITE_URL, DEFAULT_DESCRIPTION } from '$lib/seo.js';
-
-  let isLoggedIn = false;
-  let loading = true;
-  let detected = null;
-  let release = null;
-  let currentStream = 'stable';
-
-  $: grouped = release ? groupArtifactsByFamily(release) : { mac: [], linux: [], windows: [] };
-  // Stable ordering: detected family first, others in OS_FAMILIES order.
-  $: orderedFamilies = (() => {
-    const primaryKey = detected?.family;
-    const rest = OS_FAMILIES.filter(f => f.family !== primaryKey);
-    const primary = OS_FAMILIES.find(f => f.family === primaryKey);
-    return primary ? [primary, ...rest] : OS_FAMILIES;
-  })();
-
-  onMount(async () => {
-    isLoggedIn = await isAuthenticated();
-    loading = false;
-    detected = await detectOS();
-    currentStream = getStreamFromURL();
-    release = await fetchLatestDownloads(currentStream);
-  });
-
-  function handleSignIn() {
-    window.location.href = getGitHubAuthURL();
-  }
 </script>
 
 <Seo description={DEFAULT_DESCRIPTION} />
@@ -46,7 +15,7 @@
     description: DEFAULT_DESCRIPTION,
     url: SITE_URL,
     applicationCategory: 'DeveloperApplication',
-    operatingSystem: 'macOS, Linux, Windows',
+    operatingSystem: 'macOS',
     offers: {
       '@type': 'Offer',
       price: '0',
@@ -67,27 +36,10 @@
 
   <main class="page-content">
     <div class="container">
-      {#if currentStream === 'beta'}
-        <div class="beta-banner">
-          <div class="beta-banner-icon" aria-hidden="true">
-            <svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor">
-              <path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/>
-            </svg>
-          </div>
-          <div class="beta-banner-body">
-            <strong>You're on the beta channel.</strong>
-            Beta builds can be unstable, and we may reset the app data directory
-            between releases (clears your settings and sign-in). Use
-            <a href="?stream=stable" data-sveltekit-reload>the stable channel</a>
-            if you'd rather avoid that.
-          </div>
-        </div>
-      {/if}
-
       <section class="hero text-center">
         <h1>Navigate GitHub Like You Navigate Code</h1>
         <p class="hero-tagline text-secondary mt-4">
-          A GitHub Desktop alternative for Mac, Linux, and Windows — built for power users.
+          A really good GitHub client for macOS.
         </p>
         <p class="text-secondary mt-4">
           OctoPunk is a GitHub client built for the modern hacker. Fuzzy search across repos,
@@ -98,43 +50,16 @@
 		</p>
 
         <div class="cta mt-8">
-          {#if !release}
-            <!-- No release registered in the API yet. We intentionally do NOT
-                 fall back to github.com/.../releases because the source repo
-                 is private and that link 404s for anonymous users. -->
-            <button class="btn btn-primary btn-large download-btn" disabled>
-              <svg viewBox="0 0 16 16" width="20" height="20" fill="currentColor">
-                <path d="M2.75 14A1.75 1.75 0 0 1 1 12.25v-2.5a.75.75 0 0 1 1.5 0v2.5c0 .138.112.25.25.25h10.5a.25.25 0 0 0 .25-.25v-2.5a.75.75 0 0 1 1.5 0v2.5A1.75 1.75 0 0 1 13.25 14Z"/>
-                <path d="M7.25 7.689V2a.75.75 0 0 1 1.5 0v5.689l1.97-1.969a.749.749 0 1 1 1.06 1.06l-3.25 3.25a.749.749 0 0 1-1.06 0L4.22 6.78a.749.749 0 1 1 1.06-1.06l1.97 1.969Z"/>
-              </svg>
-              Downloads coming soon
-            </button>
-            <p class="download-alt text-secondary mt-4">No release is available yet — check back shortly.</p>
-            {#if currentStream !== 'beta'}
-              <p class="download-alt text-secondary mt-2">
-                <a href="?stream=beta" data-sveltekit-reload>Looking for the beta?</a>
-              </p>
-            {/if}
-          {:else}
-            <div class="download-triangle">
-              <DownloadButton
-                label={orderedFamilies[0].label}
-                artifacts={grouped[orderedFamilies[0].family]}
-                primary={true}
-                preferredPlatform={detected?.family === orderedFamilies[0].family ? detected.platform : ''}
-              />
-              <div class="download-triangle-row">
-                {#each orderedFamilies.slice(1) as fam (fam.family)}
-                  <DownloadButton
-                    label={fam.label}
-                    artifacts={grouped[fam.family]}
-                    primary={false}
-                  />
-                {/each}
-              </div>
-            </div>
-            <p class="download-alt text-secondary mt-4">{release.version}</p>
-          {/if}
+          <!-- Placeholder link: replace with the real App Store product URL once
+               OctoPunk is published to the Mac App Store. -->
+          <a href="#" class="btn btn-primary btn-large download-btn">
+            <svg viewBox="0 0 16 16" width="20" height="20" fill="currentColor">
+              <path d="M2.75 14A1.75 1.75 0 0 1 1 12.25v-2.5a.75.75 0 0 1 1.5 0v2.5c0 .138.112.25.25.25h10.5a.25.25 0 0 0 .25-.25v-2.5a.75.75 0 0 1 1.5 0v2.5A1.75 1.75 0 0 1 13.25 14Z"/>
+              <path d="M7.25 7.689V2a.75.75 0 0 1 1.5 0v5.689l1.97-1.969a.749.749 0 1 1 1.06 1.06l-3.25 3.25a.749.749 0 0 1-1.06 0L4.22 6.78a.749.749 0 1 1 1.06-1.06l1.97 1.969Z"/>
+            </svg>
+            Get it on the Mac App Store
+          </a>
+          <p class="download-alt text-secondary mt-4">Coming soon to the Mac App Store</p>
         </div>
       </section>
 
@@ -189,41 +114,6 @@
     font-weight: 500;
   }
 
-  .beta-banner {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    margin: 24px 0 0;
-    padding: 14px 18px;
-    border-radius: 10px;
-    border: 1px solid rgba(234, 179, 8, 0.35);
-    background: rgba(234, 179, 8, 0.08);
-    color: var(--color-text-primary);
-    font-size: 14px;
-    line-height: 1.55;
-    text-align: left;
-  }
-
-  .beta-banner-icon {
-    flex-shrink: 0;
-    color: #eab308;
-    margin-top: 2px;
-  }
-
-  .beta-banner-body strong {
-    margin-right: 6px;
-  }
-
-  .beta-banner-body a {
-    color: var(--color-text-link);
-    text-decoration: underline;
-    text-underline-offset: 2px;
-  }
-
-  .beta-banner-body a:hover {
-    color: var(--color-text-link-hover);
-  }
-
   @media (max-width: 600px) {
     .hero h1 {
       font-size: 32px;
@@ -241,20 +131,6 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-  }
-
-  .download-triangle {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .download-triangle-row {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-    justify-content: center;
   }
 
   .download-alt {
@@ -358,5 +234,4 @@
     clip-path: inset(0 round 6px);
     vertical-align: top;
   }
-
 </style>
