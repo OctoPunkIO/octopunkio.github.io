@@ -43,7 +43,7 @@
         </p>
         <p class="text-secondary mt-4">
           OctoPunk is a GitHub client built for the modern hacker. Fuzzy search across repos,
-          create tailored dashboard views, LSP aware, and keyboard shortcuts everywhere — GitHub that finally works like your editor.
+          create tailored dashboard views, LSP aware, and keyboard shortcuts everywhere. GitHub that finally works like your editor.
         </p>
         <p class="text-secondary mt-4">
 		  And yes... it uses 🪄AI🪄.
