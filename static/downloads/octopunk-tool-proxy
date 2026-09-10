@@ -1,0 +1,151 @@
+#!/bin/bash
+
+# OctoPunk Local Tools Integration proxy
+# This script is intentionally compatible with Apple's bundled Bash 3.2.
+
+set -u
+
+readonly OCTOPUNK_PROXY_VERSION="1"
+readonly OCTOPUNK_PID_MARKER="__OCTOPUNK_PROXY_PID__="
+readonly OCTOPUNK_EXIT_MARKER="__OCTOPUNK_PROXY_EXIT__="
+
+export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/usr/local/go/bin:$HOME/go/bin:$HOME/.cargo/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+
+fail() {
+  printf 'octopunk-tool-proxy: %s\n' "$1" >&2
+  exit "${2:-64}"
+}
+
+require_directory() {
+  [ -d "$1" ] || fail "workspace directory does not exist: $1" 66
+}
+
+resolve_tool() {
+  local requested="$1"
+  local resolved=""
+
+  case "$requested" in
+    /*)
+      resolved="$requested"
+      ;;
+    *)
+      resolved="$(command -v "$requested" 2>/dev/null || true)"
+      ;;
+  esac
+
+  [ -n "$resolved" ] || fail "tool not found: $requested" 127
+  [ -f "$resolved" ] || fail "tool is not a file: $resolved" 126
+  [ -x "$resolved" ] || fail "tool is not executable: $resolved" 126
+  printf '%s\n' "$resolved"
+}
+
+valid_pid() {
+  case "$1" in
+    ''|*[!0-9]*) return 1 ;;
+  esac
+  [ "$1" -gt 1 ]
+}
+
+terminate_tree() {
+  local target_pid="$1"
+  local child_pid=""
+  local children=""
+
+  valid_pid "$target_pid" || return 1
+  children="$(/usr/bin/pgrep -P "$target_pid" 2>/dev/null || true)"
+  for child_pid in $children; do
+    terminate_tree "$child_pid" || true
+  done
+  /bin/kill -TERM "$target_pid" 2>/dev/null || true
+}
+
+run_child() {
+  local child_pid="$1"
+  local status=0
+
+  printf '%s%s\n' "$OCTOPUNK_PID_MARKER" "$child_pid" >&2
+
+  cleanup_child() {
+    terminate_tree "$child_pid" || true
+    wait "$child_pid" 2>/dev/null || true
+  }
+
+  trap cleanup_child EXIT HUP INT TERM
+  wait "$child_pid"
+  status=$?
+  trap - EXIT HUP INT TERM
+
+  printf '%s%s\n' "$OCTOPUNK_EXIT_MARKER" "$status" >&2
+  return "$status"
+}
+
+mode="${1:-}"
+[ -n "$mode" ] || fail "missing mode"
+shift
+
+case "$mode" in
+  --version|version)
+    printf '%s\n' "$OCTOPUNK_PROXY_VERSION"
+    ;;
+
+  probe)
+    [ "$#" -eq 1 ] || fail "probe requires one tool name or path"
+    resolve_tool "$1"
+    ;;
+
+  run)
+    [ "$#" -ge 3 ] || fail "run requires TOOL WORKSPACE -- [ARGS...]"
+    requested_tool="$1"
+    workspace="$2"
+    shift 2
+    require_directory "$workspace"
+    while [ "$#" -gt 0 ] && [ "$1" = "--env" ]; do
+      shift
+      [ "$#" -gt 0 ] || fail "--env requires KEY=VALUE"
+      case "$1" in
+        [A-Za-z_]*=*) ;;
+        *) fail "invalid environment assignment" ;;
+      esac
+      export "$1"
+      shift
+    done
+    [ "$#" -gt 0 ] && [ "$1" = "--" ] || fail "missing argument separator"
+    shift
+    tool="$(resolve_tool "$requested_tool")"
+    cd "$workspace" || fail "unable to enter workspace: $workspace" 72
+    "$tool" "$@" <&0 >&1 2>&2 &
+    run_child "$!"
+    ;;
+
+  shell)
+    [ "$#" -ge 2 ] || fail "shell requires WORKSPACE COMMAND"
+    workspace="$1"
+    command_text="$2"
+    shift 2
+    require_directory "$workspace"
+    while [ "$#" -gt 0 ] && [ "$1" = "--env" ]; do
+      shift
+      [ "$#" -gt 0 ] || fail "--env requires KEY=VALUE"
+      case "$1" in
+        [A-Za-z_]*=*) ;;
+        *) fail "invalid environment assignment" ;;
+      esac
+      export "$1"
+      shift
+    done
+    [ "$#" -eq 0 ] || fail "shell does not accept trailing arguments"
+    cd "$workspace" || fail "unable to enter workspace: $workspace" 72
+    /bin/bash -lc "$command_text" <&0 >&1 2>&2 &
+    run_child "$!"
+    ;;
+
+  terminate)
+    [ "$#" -eq 1 ] || fail "terminate requires one PID"
+    valid_pid "$1" || fail "invalid PID" 64
+    terminate_tree "$1"
+    ;;
+
+  *)
+    fail "unsupported mode: $mode"
+    ;;
+esac
