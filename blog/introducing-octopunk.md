@@ -89,7 +89,7 @@ If you spend serious time on GitHub, the browser is the wrong interface. OctoPun
 
 ## Getting OctoPunk
 
-OctoPunk is coming to the Mac App Store. When it's live, grab it from the App Store like any other Mac app. No betas, no installers, just install and go.
+OctoPunk is available now on the Mac App Store. [Get OctoPunk](https://apps.apple.com/app/id6808006546), install it like any other Mac app, and updates arrive automatically through the App Store.
 
 Free for public repositories. Private repositories need OctoPunk Pro, an App Store subscription.
 

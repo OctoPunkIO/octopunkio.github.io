@@ -3,6 +3,8 @@
   import Footer from '$lib/components/Footer.svelte';
   import Seo from '$lib/components/Seo.svelte';
   import { SITE_URL, DEFAULT_DESCRIPTION } from '$lib/seo.js';
+
+  const APP_STORE_URL = 'https://apps.apple.com/app/id6808006546';
 </script>
 
 <Seo description={DEFAULT_DESCRIPTION} />
@@ -50,16 +52,14 @@
 		</p>
 
         <div class="cta mt-8">
-          <!-- Placeholder link: replace with the real App Store product URL once
-               OctoPunk is published to the Mac App Store. -->
-          <a href="#" class="btn btn-primary btn-large download-btn">
+          <a href={APP_STORE_URL} class="btn btn-primary btn-large download-btn">
             <svg viewBox="0 0 16 16" width="20" height="20" fill="currentColor">
               <path d="M2.75 14A1.75 1.75 0 0 1 1 12.25v-2.5a.75.75 0 0 1 1.5 0v2.5c0 .138.112.25.25.25h10.5a.25.25 0 0 0 .25-.25v-2.5a.75.75 0 0 1 1.5 0v2.5A1.75 1.75 0 0 1 13.25 14Z"/>
               <path d="M7.25 7.689V2a.75.75 0 0 1 1.5 0v5.689l1.97-1.969a.749.749 0 1 1 1.06 1.06l-3.25 3.25a.749.749 0 0 1-1.06 0L4.22 6.78a.749.749 0 1 1 1.06-1.06l1.97 1.969Z"/>
             </svg>
             Get it on the Mac App Store
           </a>
-          <p class="download-alt text-secondary mt-4">Coming soon to the Mac App Store</p>
+          <p class="download-alt text-secondary mt-4">Available now on the Mac App Store</p>
         </div>
       </section>
 
